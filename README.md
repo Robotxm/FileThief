@@ -40,3 +40,6 @@ Leaving blank means copying from all of USB Drivers.
 Because there isn't a UI, so everthing is processed in silent.
 If you change the configuration, you need to use Task Manager(taskmgr.exe) to kill the process and then restart it.
 Or just type **taskkill /im FileThief.exe /f**.
+
+# Requirements
+You must install .NET Framwork 3.5 before using FileThief. Luckily, Windows 7 has already contains it.
