@@ -25,14 +25,14 @@ The unit is KB. 1MB = 1024KB, 1GB = 1024MB.
 Define where to save the file.
 Leaving blank means saving to the default location. Default path is %ApplictionPath%\Files (e.g. F:\FileThief\Files)
 
-**Default value:** *BLANK
+**Default value:** *BLANK*
 
 **Meaning:** Files will be saved to %ApplictionPath%\Files (e.g. F:\FileThief\Files)
 ###VolumeLabel
 Set the volume label of USB Driver which you want to copy file from.
 Leaving blank means copying from all of USB Drivers.
 
-**Default value:***BLANK
+**Default value:***BLANK*
 
 **Meaning:** Copy from all of USB Drivers.
 
