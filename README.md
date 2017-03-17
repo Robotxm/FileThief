@@ -27,7 +27,7 @@ Leaving blank means saving to the default location. Default path is %ApplictionP
 
 **Default value:** *BLANK*
 
-**Meaning:** Files will be saved to %ApplictionPath%\Files (e.g. F:\FileThief\Files)
+**Meaning:** Files will be saved to %ApplicationPath%\Files (e.g. F:\FileThief\Files)
 ### VolumeLabel
 Set the volume label of USB Driver which you want to copy file from.
 Leaving blank means copying from all of USB Drivers.
