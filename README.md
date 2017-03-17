@@ -20,8 +20,8 @@ The unit is KB. 1MB = 1024KB, 1GB = 1024MB.
 
 **Default value:** 10240
 
-**Meaning:** File whose size is smaller  than 10 MB will be copied.
-###Path
+**Meaning:** File whose size is smaller than 10 MB will be copied.
+### Path
 Define where to save the file.
 Leaving blank means saving to the default location. Default path is %ApplictionPath%\Files (e.g. F:\FileThief\Files)
 
