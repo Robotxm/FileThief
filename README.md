@@ -26,13 +26,15 @@ Define where to save the file.
 Leaving blank means saving to the default location. Default path is %ApplictionPath%\Files (e.g. F:\FileThief\Files)
 
 **Default value:** *BLANK*
+
 **Meaning:** Files will be saved to %ApplictionPath%\Files (e.g. F:\FileThief\Files)
 ### VolumeLabel
 Set the volume label of USB Driver which you want to copy file from.
 Leaving blank means copying from all of USB Drivers.
 
 **Default value:** *BLANK*
-** Meaning: ** Copy from all of USB Drivers.
+
+**Meaning:** Copy from all of USB Drivers.
 
 # Control FileThief
 Because there isn't a UI, so everthing is processed in silent.
@@ -40,4 +42,4 @@ If you change the configuration, you need to use Task Manager(taskmgr.exe) to ki
 Or just type **taskkill /im FileThief.exe /f**.
 
 # Requirements
-You must install .NET Framwork 3.5 before using FileThief. Luckily, Windows 7 has already contains it.
+You must install .NET Framwork 3.5 before using FileThief. Luckily, Windows 7 has already contained it.
