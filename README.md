@@ -37,7 +37,7 @@ Leaving blank means copying from all of USB Drivers.
 **Meaning:** Copy from all of USB Drivers.
 
 # Control FileThief
-Because there isn't a UI, so everthing is processed in silent.
+Because there isn't a UI, so everything is processed in silence.
 If you change the configuration, you need to use Task Manager(taskmgr.exe) to kill the process and then restart it.
 Or just type **taskkill /im FileThief.exe /f**.
 
