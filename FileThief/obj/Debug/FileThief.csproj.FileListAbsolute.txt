@@ -1,0 +1,10 @@
+D:\Program\Applications\WinForm\FileThief\FileThief\bin\Debug\FileThief.exe.config
+D:\Program\Applications\WinForm\FileThief\FileThief\bin\Debug\FileThief.exe
+D:\Program\Applications\WinForm\FileThief\FileThief\bin\Debug\FileThief.pdb
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.FrmAbout.resources
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.FrmMain.resources
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.FrmSettings.resources
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.Properties.Resources.resources
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.csproj.GenerateResource.Cache
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.exe
+D:\Program\Applications\WinForm\FileThief\FileThief\obj\Debug\FileThief.pdb
