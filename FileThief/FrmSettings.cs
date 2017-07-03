@@ -6,31 +6,11 @@ namespace FileThief
     
     public partial class FrmSettings : Form
     {
-        //ClsMain cMain = new ;
         public FrmSettings()
         {
             InitializeComponent();
         }
-
-        /*
-            cMain.ConType = cMain.ReadIni("FileType", "Type", "rar|zip|7z|doc|docx|ppt|pptx|xls|xlsx", cMain.StrConfig).Split(new char[] {'|'});
-            cMain.BType = cMain.ReadIni("FileType", "TypeMode", "0", cMain.StrConfig);
-            cMain.ConSize = Convert.ToInt32(cMain.ReadIni("FileType", "Size", "10240", cMain.StrConfig));
-            cMain.BSize = cMain.ReadIni("FileType", "SizeMode", "0", cMain.StrConfig);
-            cMain.ConPath = cMain.ReadIni("FileType", "Path", Application.StartupPath + "\\Files", cMain.StrConfig);
-
-            cMain.ConFileNameRegExp = cMain.ReadIni("FileName", "RegExp", "", cMain.StrConfig);
-
-            cMain.ConLabel = cMain.ReadIni("Driver", "VolumeLabel", "", cMain.StrConfig).Split(new char[] {'|'});
-            cMain.BLabel = cMain.ReadIni("Driver", "VolumeLabelMode", "0", cMain.StrConfig);
-
-            cMain.ConLog = cMain.ReadIni("Log", "WriteLog", "1", cMain.StrConfig);
-            cMain.ConLogPath = cMain.ReadIni("Log", "LogPath", "", cMain.StrConfig);
-            cMain.ConLogErr =cMain.ReadIni("Log", "LogError", "1", cMain.StrConfig);
-            cMain.ConLogInfo =cMain.ReadIni("Log", "LogInfo", "1", cMain.StrConfig);
-
-            cMain.ConStartup =cMain.ReadIni("General", "Startup", "0", cMain.StrConfig);
-            cMain.ConSilent =cMain.ReadIni("General", "SilentMode", "1", cMain.StrConfig);*/
+        
         private void frmSettings_Load(object sender, EventArgs e)
         {
             // Load Tooltip
@@ -108,6 +88,11 @@ namespace FileThief
             if(txtPath.Text!=null) sfd.InitialDirectory = System.IO.Path.GetDirectoryName(txtLogPath.Text);
             sfd.ShowDialog();
             txtLogPath.Text = sfd.FileName;
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            new FrmAbout().Show();
         }
     }
 }

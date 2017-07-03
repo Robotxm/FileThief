@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Timers;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using Timer = System.Timers.Timer;
 
 namespace FileThief
 {
@@ -32,7 +29,7 @@ namespace FileThief
 
         public static string ConStartup, ConSilent;
 
-        public static bool Status;
+        public static bool Status = true;
 
 #region "操作 Ini"
 

@@ -306,6 +306,7 @@
             this.btnAbout.TabIndex = 22;
             this.btnAbout.Text = "关于";
             this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // label8
             // 
