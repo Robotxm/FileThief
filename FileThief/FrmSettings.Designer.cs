@@ -60,7 +60,12 @@
             this.fdb = new System.Windows.Forms.FolderBrowserDialog();
             this.label8 = new System.Windows.Forms.Label();
             this.sfd = new System.Windows.Forms.SaveFileDialog();
+            this.gbDriverType = new System.Windows.Forms.GroupBox();
+            this.chkUSBDisk = new System.Windows.Forms.CheckBox();
+            this.chkUSBHD = new System.Windows.Forms.CheckBox();
+            this.chkROM = new System.Windows.Forms.CheckBox();
             this.gbLog.SuspendLayout();
+            this.gbDriverType.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -271,7 +276,7 @@
             // chkAutoRun
             // 
             this.chkAutoRun.AutoSize = true;
-            this.chkAutoRun.Location = new System.Drawing.Point(15, 267);
+            this.chkAutoRun.Location = new System.Drawing.Point(12, 323);
             this.chkAutoRun.Name = "chkAutoRun";
             this.chkAutoRun.Size = new System.Drawing.Size(75, 21);
             this.chkAutoRun.TabIndex = 19;
@@ -281,7 +286,7 @@
             // chkSilent
             // 
             this.chkSilent.AutoSize = true;
-            this.chkSilent.Location = new System.Drawing.Point(15, 294);
+            this.chkSilent.Location = new System.Drawing.Point(93, 323);
             this.chkSilent.Name = "chkSilent";
             this.chkSilent.Size = new System.Drawing.Size(75, 21);
             this.chkSilent.TabIndex = 20;
@@ -290,7 +295,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(293, 321);
+            this.btnSave.Location = new System.Drawing.Point(293, 344);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 21;
@@ -300,7 +305,7 @@
             // 
             // btnAbout
             // 
-            this.btnAbout.Location = new System.Drawing.Point(212, 321);
+            this.btnAbout.Location = new System.Drawing.Point(212, 344);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(75, 23);
             this.btnAbout.TabIndex = 22;
@@ -311,17 +316,60 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 324);
+            this.label8.Location = new System.Drawing.Point(12, 347);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(152, 17);
             this.label8.TabIndex = 23;
             this.label8.Text = "鼠标移至项目上可查看说明";
             // 
+            // gbDriverType
+            // 
+            this.gbDriverType.Controls.Add(this.chkROM);
+            this.gbDriverType.Controls.Add(this.chkUSBHD);
+            this.gbDriverType.Controls.Add(this.chkUSBDisk);
+            this.gbDriverType.Location = new System.Drawing.Point(15, 267);
+            this.gbDriverType.Name = "gbDriverType";
+            this.gbDriverType.Size = new System.Drawing.Size(353, 50);
+            this.gbDriverType.TabIndex = 24;
+            this.gbDriverType.TabStop = false;
+            this.gbDriverType.Text = "可移动设备类型";
+            // 
+            // chkUSBDisk
+            // 
+            this.chkUSBDisk.AutoSize = true;
+            this.chkUSBDisk.Location = new System.Drawing.Point(6, 22);
+            this.chkUSBDisk.Name = "chkUSBDisk";
+            this.chkUSBDisk.Size = new System.Drawing.Size(91, 21);
+            this.chkUSBDisk.TabIndex = 0;
+            this.chkUSBDisk.Text = "USB 闪存盘";
+            this.chkUSBDisk.UseVisualStyleBackColor = true;
+            // 
+            // chkUSBHD
+            // 
+            this.chkUSBHD.AutoSize = true;
+            this.chkUSBHD.Location = new System.Drawing.Point(103, 22);
+            this.chkUSBHD.Name = "chkUSBHD";
+            this.chkUSBHD.Size = new System.Drawing.Size(79, 21);
+            this.chkUSBHD.TabIndex = 1;
+            this.chkUSBHD.Text = "USB 硬盘";
+            this.chkUSBHD.UseVisualStyleBackColor = true;
+            // 
+            // chkROM
+            // 
+            this.chkROM.AutoSize = true;
+            this.chkROM.Location = new System.Drawing.Point(188, 22);
+            this.chkROM.Name = "chkROM";
+            this.chkROM.Size = new System.Drawing.Size(144, 21);
+            this.chkROM.TabIndex = 2;
+            this.chkROM.Text = "光盘 (包括挂载的ISO)";
+            this.chkROM.UseVisualStyleBackColor = true;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 357);
+            this.ClientSize = new System.Drawing.Size(380, 379);
+            this.Controls.Add(this.gbDriverType);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.btnSave);
@@ -355,6 +403,8 @@
             this.Load += new System.EventHandler(this.frmSettings_Load);
             this.gbLog.ResumeLayout(false);
             this.gbLog.PerformLayout();
+            this.gbDriverType.ResumeLayout(false);
+            this.gbDriverType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,5 +442,9 @@
         private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.SaveFileDialog sfd;
+        private System.Windows.Forms.GroupBox gbDriverType;
+        private System.Windows.Forms.CheckBox chkROM;
+        private System.Windows.Forms.CheckBox chkUSBHD;
+        private System.Windows.Forms.CheckBox chkUSBDisk;
     }
 }

@@ -29,6 +29,8 @@ namespace FileThief
 
         public static string ConStartup, ConSilent;
 
+        public static string ConUSBDisk, ConUSBHD, ConROM;
+
         public static bool Status = true;
 
 #region "操作 Ini"
