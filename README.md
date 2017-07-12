@@ -15,3 +15,6 @@ If you like, you can fully hide FileThief (except in Task Manager)
 
 ### Open Sources
 You should obey GPL v3 when redeveloping.
+
+### More Information
+Please (see [wiki](https://github.com/Robotxm/FileThief/wiki)).
