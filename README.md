@@ -11,6 +11,7 @@ If you like, you can fully hide FileThief (except in Task Manager)
 
 ### What do I need to use FileThief?
 - A computer running Windows Vista and later (Windows 10 IS RECOMMENDED)
+
 ** Notice: Windows XP is not supported anymore from 2.2.2 Debug Ver in order to enable High DPI Aware. **
 - .NET Framework 3.5 (See [Wiki](https://github.com/Robotxm/FileThief/wiki/System-Requirements "Wiki"))
 
