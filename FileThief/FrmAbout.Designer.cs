@@ -1,4 +1,6 @@
-﻿namespace FileThief
+﻿using Be.Windows.Forms;
+
+namespace FileThief
 {
     partial class FrmAbout
     {
@@ -35,7 +37,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnOpenSource = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.rtbeOpenSource = new Be.Windows.Forms.RichTextBoxEx();
+            this.richTextBoxEx1 = new FileThief.RichTextBoxEx();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,23 +102,20 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
-            // rtbeOpenSource
+            // richTextBoxEx1
             // 
-            this.rtbeOpenSource.Location = new System.Drawing.Point(15, 12);
-            this.rtbeOpenSource.Name = "rtbeOpenSource";
-            this.rtbeOpenSource.ReadOnly = true;
-            this.rtbeOpenSource.Size = new System.Drawing.Size(404, 184);
-            this.rtbeOpenSource.TabIndex = 7;
-            this.rtbeOpenSource.Text = resources.GetString("rtbeOpenSource.Text");
-            this.rtbeOpenSource.Visible = false;
-            this.rtbeOpenSource.WordWrap = false;
+            this.richTextBoxEx1.Location = new System.Drawing.Point(11, 10);
+            this.richTextBoxEx1.Name = "richTextBoxEx1";
+            this.richTextBoxEx1.Size = new System.Drawing.Size(408, 187);
+            this.richTextBoxEx1.TabIndex = 7;
+            this.richTextBoxEx1.Text = resources.GetString("richTextBoxEx1.Text");
             // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(432, 231);
-            this.Controls.Add(this.rtbeOpenSource);
+            this.Controls.Add(this.richTextBoxEx1);
             this.Controls.Add(this.btnOpenSource);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pictureBox1);
@@ -147,6 +146,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnOpenSource;
-        private Be.Windows.Forms.RichTextBoxEx rtbeOpenSource;
+        private FileThief.RichTextBoxEx  richTextBoxEx1;
     }
 }

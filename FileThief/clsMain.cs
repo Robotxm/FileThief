@@ -29,7 +29,11 @@ namespace FileThief
 
         public static string ConStartup, ConSilent;
 
-        public static string ConUSBDisk, ConUSBHD, ConROM;
+        public static string ConUsbDisk, ConUsbhd, ConRom;
+
+        public static string ConWhitelist;
+
+        public static string ConHotkeyE, ConHotkey;
 
         public static bool Status = true;
 

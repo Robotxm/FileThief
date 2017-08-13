@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Be.Windows.Forms
+namespace FileThief
 {
 	internal sealed class NativeMethods
 	{

@@ -67,9 +67,9 @@
             this.lblFileType = new System.Windows.Forms.Label();
             this.grpProgram = new System.Windows.Forms.GroupBox();
             this.gbWhitelist = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtWlDrive = new System.Windows.Forms.TextBox();
             this.chkWhitelist = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSelWhitelist = new System.Windows.Forms.Button();
             this.lblWlVolume = new System.Windows.Forms.Label();
             this.lblWhitelistTip = new System.Windows.Forms.Label();
             this.gbHotkey = new System.Windows.Forms.GroupBox();
@@ -78,6 +78,10 @@
             this.lblHotkey = new System.Windows.Forms.Label();
             this.gbCopyTo = new System.Windows.Forms.GroupBox();
             this.chkCopyTo = new System.Windows.Forms.CheckBox();
+            this.txtCopyToDevice = new System.Windows.Forms.TextBox();
+            this.btnSelCopyTo = new System.Windows.Forms.Button();
+            this.lblCopyToDevice = new System.Windows.Forms.Label();
+            this.btnCreateWl = new System.Windows.Forms.Button();
             this.gbLog.SuspendLayout();
             this.gbDriverType.SuspendLayout();
             this.grpFilter.SuspendLayout();
@@ -420,9 +424,10 @@
             // 
             // gbWhitelist
             // 
-            this.gbWhitelist.Controls.Add(this.textBox1);
+            this.gbWhitelist.Controls.Add(this.btnCreateWl);
+            this.gbWhitelist.Controls.Add(this.txtWlDrive);
             this.gbWhitelist.Controls.Add(this.chkWhitelist);
-            this.gbWhitelist.Controls.Add(this.button1);
+            this.gbWhitelist.Controls.Add(this.btnSelWhitelist);
             this.gbWhitelist.Controls.Add(this.lblWlVolume);
             this.gbWhitelist.Controls.Add(this.lblWhitelistTip);
             this.gbWhitelist.Location = new System.Drawing.Point(15, 208);
@@ -431,12 +436,14 @@
             this.gbWhitelist.TabIndex = 27;
             this.gbWhitelist.TabStop = false;
             // 
-            // textBox1
+            // txtWlDrive
             // 
-            this.textBox1.Location = new System.Drawing.Point(47, 22);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(102, 23);
-            this.textBox1.TabIndex = 5;
+            this.txtWlDrive.BackColor = System.Drawing.SystemColors.Window;
+            this.txtWlDrive.Location = new System.Drawing.Point(47, 22);
+            this.txtWlDrive.Name = "txtWlDrive";
+            this.txtWlDrive.ReadOnly = true;
+            this.txtWlDrive.Size = new System.Drawing.Size(102, 23);
+            this.txtWlDrive.TabIndex = 5;
             // 
             // chkWhitelist
             // 
@@ -449,14 +456,15 @@
             this.chkWhitelist.UseVisualStyleBackColor = true;
             this.chkWhitelist.CheckedChanged += new System.EventHandler(this.chkWhitelist_CheckedChanged);
             // 
-            // button1
+            // btnSelWhitelist
             // 
-            this.button1.Location = new System.Drawing.Point(155, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "选择设备...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSelWhitelist.Location = new System.Drawing.Point(155, 22);
+            this.btnSelWhitelist.Name = "btnSelWhitelist";
+            this.btnSelWhitelist.Size = new System.Drawing.Size(75, 23);
+            this.btnSelWhitelist.TabIndex = 3;
+            this.btnSelWhitelist.Text = "选择设备...";
+            this.btnSelWhitelist.UseVisualStyleBackColor = true;
+            this.btnSelWhitelist.Click += new System.EventHandler(this.btnSelWhitelist_Click);
             // 
             // lblWlVolume
             // 
@@ -518,10 +526,13 @@
             // 
             // gbCopyTo
             // 
+            this.gbCopyTo.Controls.Add(this.txtCopyToDevice);
+            this.gbCopyTo.Controls.Add(this.btnSelCopyTo);
+            this.gbCopyTo.Controls.Add(this.lblCopyToDevice);
             this.gbCopyTo.Controls.Add(this.chkCopyTo);
             this.gbCopyTo.Location = new System.Drawing.Point(15, 270);
             this.gbCopyTo.Name = "gbCopyTo";
-            this.gbCopyTo.Size = new System.Drawing.Size(353, 100);
+            this.gbCopyTo.Size = new System.Drawing.Size(353, 59);
             this.gbCopyTo.TabIndex = 29;
             this.gbCopyTo.TabStop = false;
             // 
@@ -536,11 +547,47 @@
             this.chkCopyTo.UseVisualStyleBackColor = true;
             this.chkCopyTo.CheckedChanged += new System.EventHandler(this.chkCopyTo_CheckedChanged);
             // 
+            // txtCopyToDevice
+            // 
+            this.txtCopyToDevice.Location = new System.Drawing.Point(47, 27);
+            this.txtCopyToDevice.Name = "txtCopyToDevice";
+            this.txtCopyToDevice.Size = new System.Drawing.Size(102, 23);
+            this.txtCopyToDevice.TabIndex = 8;
+            // 
+            // btnSelCopyTo
+            // 
+            this.btnSelCopyTo.Location = new System.Drawing.Point(155, 27);
+            this.btnSelCopyTo.Name = "btnSelCopyTo";
+            this.btnSelCopyTo.Size = new System.Drawing.Size(75, 23);
+            this.btnSelCopyTo.TabIndex = 7;
+            this.btnSelCopyTo.Text = "选择设备...";
+            this.btnSelCopyTo.UseVisualStyleBackColor = true;
+            this.btnSelCopyTo.Click += new System.EventHandler(this.btnSelCopyTo_Click);
+            // 
+            // lblCopyToDevice
+            // 
+            this.lblCopyToDevice.AutoSize = true;
+            this.lblCopyToDevice.Location = new System.Drawing.Point(6, 33);
+            this.lblCopyToDevice.Name = "lblCopyToDevice";
+            this.lblCopyToDevice.Size = new System.Drawing.Size(35, 17);
+            this.lblCopyToDevice.TabIndex = 6;
+            this.lblCopyToDevice.Text = "设备:";
+            // 
+            // btnCreateWl
+            // 
+            this.btnCreateWl.Location = new System.Drawing.Point(236, 22);
+            this.btnCreateWl.Name = "btnCreateWl";
+            this.btnCreateWl.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateWl.TabIndex = 6;
+            this.btnCreateWl.Text = "创建";
+            this.btnCreateWl.UseVisualStyleBackColor = true;
+            this.btnCreateWl.Click += new System.EventHandler(this.btnCreateWl_Click);
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(740, 379);
+            this.ClientSize = new System.Drawing.Size(740, 338);
             this.Controls.Add(this.gbCopyTo);
             this.Controls.Add(this.gbHotkey);
             this.Controls.Add(this.gbWhitelist);
@@ -620,14 +667,18 @@
         private System.Windows.Forms.GroupBox gbWhitelist;
         private System.Windows.Forms.Label lblWhitelistTip;
         private System.Windows.Forms.CheckBox chkWhitelist;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSelWhitelist;
         private System.Windows.Forms.Label lblWlVolume;
         private System.Windows.Forms.GroupBox gbHotkey;
         private System.Windows.Forms.Label lblHotkey;
         private HotkeyControl hotkeyControl1;
         private System.Windows.Forms.CheckBox chkHotkey;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtWlDrive;
         private System.Windows.Forms.GroupBox gbCopyTo;
         private System.Windows.Forms.CheckBox chkCopyTo;
+        private System.Windows.Forms.TextBox txtCopyToDevice;
+        private System.Windows.Forms.Button btnSelCopyTo;
+        private System.Windows.Forms.Label lblCopyToDevice;
+        private System.Windows.Forms.Button btnCreateWl;
     }
 }

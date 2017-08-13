@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace Be.Windows.Forms
+namespace FileThief
 {
 	/// <summary>
 	/// RichTextBoxEx is derived from RichTextBox and supports XP Visual Styles.

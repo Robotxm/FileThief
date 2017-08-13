@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace FileThief
@@ -45,9 +47,9 @@ namespace FileThief
             chkLogInfo.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLogInfo));
             chkAutoRun.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConStartup));
             chkSilent.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConSilent));
-            chkUSBDisk.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConUSBDisk));
-            chkUSBHD.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConUSBHD));
-            chkROM.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConROM));
+            chkUSBDisk.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConUsbDisk));
+            chkUSBHD.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConUsbhd));
+            chkROM.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConRom));
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -75,6 +77,8 @@ namespace FileThief
             ClsMain.WriteIni("DriverType", "USBHD", Convert.ToInt32(chkUSBHD.Checked).ToString(), ClsMain.StrConfig);
             ClsMain.WriteIni("DriverType", "ROM", Convert.ToInt32(chkROM.Checked).ToString(), ClsMain.StrConfig);
 
+            ClsMain.WriteIni("Device", "Whitelist", Convert.ToInt32(chkWhitelist.Checked).ToString(), ClsMain.StrConfig);
+
             var bootStatus = ClsMain.SetAutoBoot(chkAutoRun.Checked);
             if (bootStatus == -1)
             {
@@ -89,7 +93,7 @@ namespace FileThief
         {
             fdb.Description = @"请选择复制文件的保存位置。";
             fdb.ShowDialog();
-            txtPath.Text = fdb.SelectedPath;
+            if (fdb.SelectedPath != "") txtPath.Text = fdb.SelectedPath;
         }
 
         private void btnBroLog_Click(object sender, EventArgs e)
@@ -140,7 +144,39 @@ namespace FileThief
             grp.Enabled = chk.Checked;
         }
 
-        
+        private void btnSelWhitelist_Click(object sender, EventArgs e)
+        {
+            fdb.Description = "请选择要加入白名单的设备。\n之后请返回设置界面点击「创建」。";
+            fdb.ShowDialog();
+            if (fdb.SelectedPath != "") txtWlDrive.Text = Path.GetPathRoot(fdb.SelectedPath);
+        }
+
+        private void btnSelCopyTo_Click(object sender, EventArgs e)
+        {
+            fdb.Description = "请选择要保存复制到的文件的设备。";
+            fdb.ShowDialog();
+            if (fdb.SelectedPath != "") txtWlDrive.Text = Path.GetPathRoot(fdb.SelectedPath);
+        }
+
+        private void btnCreateWl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!File.Exists(txtWlDrive.Text + ".ftwl"))
+                {
+                    File.WriteAllText(txtWlDrive.Text + ".ftwl", "", Encoding.UTF8);
+                    MessageBox.Show("创建成功", "创建白名单成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("这个设备已经创建过白名单。", "创建白名单失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("创建设备白名单失败\n" + ex.Message, "创建白名单失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
 

