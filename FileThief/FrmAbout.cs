@@ -50,5 +50,24 @@ namespace FileThief
                           "FileThief 在 GPL v3 协议下开放源代码。\r\n" +
                           "更多信息请访问 GitHub: ";
         }
+
+        private void btnOpenSource_Click(object sender, EventArgs e)
+        {
+            if (rtbeOpenSource.Visible)
+            {
+                rtbeOpenSource.Visible = false;
+                btnOpenSource.Text = "开源项目";
+            }
+            else
+            {
+                rtbeOpenSource.Visible = true;
+                btnOpenSource.Text = "程序信息";
+            }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

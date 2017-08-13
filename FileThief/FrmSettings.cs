@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FileThief
@@ -24,8 +25,10 @@ namespace FileThief
             toolTip1.SetToolTip(chkLogErr, "设置是否记录错误信息\n如磁盘意外断开连接等");
             toolTip1.SetToolTip(chkLogInfo, "设置是否记录普通信息\n如复制成功等");
             toolTip1.SetToolTip(chkAutoRun, "设置是否开机自动运行程序\n需要管理员权限");
-            toolTip1.SetToolTip(chkSilent, "设置是否以静默模式运行程序\n在静默模式下，不会在任务栏托盘显示图标\n可以通过设置的热键显示设置窗口");
-            
+            toolTip1.SetToolTip(chkSilent, "设置是否以静默模式运行程序\n在静默模式下，不会在任务栏托盘显示图标\n静默模式下可以通过设置的热键显示设置窗口");
+            toolTip1.SetToolTip(lblWlVolume, "可以通过在可移动设备根目录创建白名单文件来跳过对整个设备的扫描\n如果设置了「将复制的文件保存到指定设备」则必须开启此选项");
+            toolTip1.SetToolTip(lblHotkey,"热键可以用于在任何情况下显示设置窗口");
+
             // Load Config to GUI
             txtType.Text = ClsMain.CType;
             cbType.SelectedIndex = Convert.ToInt32(ClsMain.BType);
@@ -36,6 +39,7 @@ namespace FileThief
             txtLabel.Text = ClsMain.CLabel;
             cbVolume.SelectedIndex = Convert.ToInt32(ClsMain.BLabel);
             chkLog.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLog));
+            ManageCheckGroupBox(chkLog, gbLog);
             txtLogPath.Text = ClsMain.ConLogPath;
             chkLogErr.Checked=Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLogErr));
             chkLogInfo.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLogInfo));
@@ -99,8 +103,44 @@ namespace FileThief
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            new FrmAbout().Show();
+            new FrmAbout().ShowDialog();
         }
+
+        private void chkLog_CheckedChanged(object sender, EventArgs e)
+        {
+            ManageCheckGroupBox(chkLog, gbLog);
+        }
+
+        private void chkWhitelist_CheckedChanged(object sender, EventArgs e)
+        {
+            ManageCheckGroupBox(chkWhitelist, gbWhitelist);
+            if (!chkWhitelist.Checked) chkCopyTo.Checked = false;
+        }
+
+        private void chkHotkey_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void chkCopyTo_CheckedChanged(object sender, EventArgs e)
+        {
+            ManageCheckGroupBox(chkHotkey, gbHotkey);
+            if (chkCopyTo.Checked) chkWhitelist.Checked = true;
+        }
+
+        // Solution from http://csharphelper.com/blog/2014/08/make-a-checked-groupbox-in-c/
+        private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
+        {
+            if (chk.Parent == grp)
+            {
+                grp.Parent.Controls.Add(chk);
+                chk.Location = new Point(chk.Left + grp.Left, chk.Top + grp.Top);
+                chk.BringToFront();
+            }
+            grp.Enabled = chk.Checked;
+        }
+
+        
     }
 }
 

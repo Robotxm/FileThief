@@ -32,8 +32,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnOpenSource = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.rtbeOpenSource = new Be.Windows.Forms.RichTextBoxEx();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,6 +70,26 @@
             this.linkLabel2.Text = "https://github.com/Robotxm/FileThief";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(345, 202);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 5;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnOpenSource
+            // 
+            this.btnOpenSource.Location = new System.Drawing.Point(264, 202);
+            this.btnOpenSource.Name = "btnOpenSource";
+            this.btnOpenSource.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenSource.TabIndex = 6;
+            this.btnOpenSource.Text = "开源项目";
+            this.btnOpenSource.UseVisualStyleBackColor = true;
+            this.btnOpenSource.Click += new System.EventHandler(this.btnOpenSource_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::FileThief.Properties.Resources.FileThief;
@@ -78,23 +100,25 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
-            // textBox1
+            // rtbeOpenSource
             // 
-            this.textBox1.Location = new System.Drawing.Point(15, 211);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(405, 78);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
-            this.textBox1.WordWrap = false;
+            this.rtbeOpenSource.Location = new System.Drawing.Point(15, 12);
+            this.rtbeOpenSource.Name = "rtbeOpenSource";
+            this.rtbeOpenSource.ReadOnly = true;
+            this.rtbeOpenSource.Size = new System.Drawing.Size(404, 184);
+            this.rtbeOpenSource.TabIndex = 7;
+            this.rtbeOpenSource.Text = resources.GetString("rtbeOpenSource.Text");
+            this.rtbeOpenSource.Visible = false;
+            this.rtbeOpenSource.WordWrap = false;
             // 
             // FrmAbout
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 299);
-            this.Controls.Add(this.textBox1);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(432, 231);
+            this.Controls.Add(this.rtbeOpenSource);
+            this.Controls.Add(this.btnOpenSource);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
@@ -121,6 +145,8 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnOpenSource;
+        private Be.Windows.Forms.RichTextBoxEx rtbeOpenSource;
     }
 }

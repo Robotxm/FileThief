@@ -50,6 +50,8 @@
             this.chkUSBHD = new System.Windows.Forms.CheckBox();
             this.chkUSBDisk = new System.Windows.Forms.CheckBox();
             this.grpFilter = new System.Windows.Forms.GroupBox();
+            this.txtRegExp = new System.Windows.Forms.TextBox();
+            this.lblFileName = new System.Windows.Forms.Label();
             this.btnBroSP = new System.Windows.Forms.Button();
             this.cbType = new System.Windows.Forms.ComboBox();
             this.cbVolume = new System.Windows.Forms.ComboBox();
@@ -63,24 +65,26 @@
             this.lblSavePath = new System.Windows.Forms.Label();
             this.lblFileSize = new System.Windows.Forms.Label();
             this.lblFileType = new System.Windows.Forms.Label();
-            this.txtRegExp = new System.Windows.Forms.TextBox();
-            this.lblFileName = new System.Windows.Forms.Label();
             this.grpProgram = new System.Windows.Forms.GroupBox();
-            this.grpWhitelist = new System.Windows.Forms.GroupBox();
-            this.lblWhitelistTip = new System.Windows.Forms.Label();
-            this.lblWlVolume = new System.Windows.Forms.Label();
+            this.gbWhitelist = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.chkWhitelist = new System.Windows.Forms.CheckBox();
-            this.grpHotkey = new System.Windows.Forms.GroupBox();
-            this.btnCheckUpdate = new System.Windows.Forms.Button();
-            this.lblHotkeyTip = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lblWlVolume = new System.Windows.Forms.Label();
+            this.lblWhitelistTip = new System.Windows.Forms.Label();
+            this.gbHotkey = new System.Windows.Forms.GroupBox();
+            this.chkHotkey = new System.Windows.Forms.CheckBox();
+            this.hotkeyControl1 = new FileThief.HotkeyControl();
+            this.lblHotkey = new System.Windows.Forms.Label();
+            this.gbCopyTo = new System.Windows.Forms.GroupBox();
+            this.chkCopyTo = new System.Windows.Forms.CheckBox();
             this.gbLog.SuspendLayout();
             this.gbDriverType.SuspendLayout();
             this.grpFilter.SuspendLayout();
             this.grpProgram.SuspendLayout();
-            this.grpWhitelist.SuspendLayout();
-            this.grpHotkey.SuspendLayout();
+            this.gbWhitelist.SuspendLayout();
+            this.gbHotkey.SuspendLayout();
+            this.gbCopyTo.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkLog
@@ -92,6 +96,7 @@
             this.chkLog.TabIndex = 14;
             this.chkLog.Text = "写入日志";
             this.chkLog.UseVisualStyleBackColor = true;
+            this.chkLog.CheckedChanged += new System.EventHandler(this.chkLog_CheckedChanged);
             // 
             // gbLog
             // 
@@ -110,11 +115,11 @@
             // chkLogInfo
             // 
             this.chkLogInfo.AutoSize = true;
-            this.chkLogInfo.Location = new System.Drawing.Point(69, 51);
+            this.chkLogInfo.Location = new System.Drawing.Point(87, 51);
             this.chkLogInfo.Name = "chkLogInfo";
-            this.chkLogInfo.Size = new System.Drawing.Size(51, 21);
+            this.chkLogInfo.Size = new System.Drawing.Size(75, 21);
             this.chkLogInfo.TabIndex = 20;
-            this.chkLogInfo.Text = "信息";
+            this.chkLogInfo.Text = "记录信息";
             this.chkLogInfo.UseVisualStyleBackColor = true;
             // 
             // btnBroLog
@@ -130,11 +135,11 @@
             // chkLogErr
             // 
             this.chkLogErr.AutoSize = true;
-            this.chkLogErr.Location = new System.Drawing.Point(6, 51);
+            this.chkLogErr.Location = new System.Drawing.Point(9, 50);
             this.chkLogErr.Name = "chkLogErr";
-            this.chkLogErr.Size = new System.Drawing.Size(51, 21);
+            this.chkLogErr.Size = new System.Drawing.Size(75, 21);
             this.chkLogErr.TabIndex = 19;
-            this.chkLogErr.Text = "错误";
+            this.chkLogErr.Text = "记录错误";
             this.chkLogErr.UseVisualStyleBackColor = true;
             // 
             // txtLogPath
@@ -156,7 +161,7 @@
             // chkAutoRun
             // 
             this.chkAutoRun.AutoSize = true;
-            this.chkAutoRun.Location = new System.Drawing.Point(6, 21);
+            this.chkAutoRun.Location = new System.Drawing.Point(9, 21);
             this.chkAutoRun.Name = "chkAutoRun";
             this.chkAutoRun.Size = new System.Drawing.Size(75, 21);
             this.chkAutoRun.TabIndex = 19;
@@ -166,7 +171,7 @@
             // chkSilent
             // 
             this.chkSilent.AutoSize = true;
-            this.chkSilent.Location = new System.Drawing.Point(87, 21);
+            this.chkSilent.Location = new System.Drawing.Point(93, 21);
             this.chkSilent.Name = "chkSilent";
             this.chkSilent.Size = new System.Drawing.Size(75, 21);
             this.chkSilent.TabIndex = 20;
@@ -175,7 +180,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(653, 305);
+            this.btnSave.Location = new System.Drawing.Point(653, 270);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 21;
@@ -185,7 +190,7 @@
             // 
             // btnAbout
             // 
-            this.btnAbout.Location = new System.Drawing.Point(572, 305);
+            this.btnAbout.Location = new System.Drawing.Point(572, 270);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(75, 23);
             this.btnAbout.TabIndex = 22;
@@ -196,7 +201,7 @@
             // lblTip
             // 
             this.lblTip.AutoSize = true;
-            this.lblTip.Location = new System.Drawing.Point(333, 308);
+            this.lblTip.Location = new System.Drawing.Point(414, 273);
             this.lblTip.Name = "lblTip";
             this.lblTip.Size = new System.Drawing.Size(152, 17);
             this.lblTip.TabIndex = 23;
@@ -217,7 +222,7 @@
             // chkROM
             // 
             this.chkROM.AutoSize = true;
-            this.chkROM.Location = new System.Drawing.Point(188, 22);
+            this.chkROM.Location = new System.Drawing.Point(191, 22);
             this.chkROM.Name = "chkROM";
             this.chkROM.Size = new System.Drawing.Size(144, 21);
             this.chkROM.TabIndex = 2;
@@ -227,7 +232,7 @@
             // chkUSBHD
             // 
             this.chkUSBHD.AutoSize = true;
-            this.chkUSBHD.Location = new System.Drawing.Point(103, 22);
+            this.chkUSBHD.Location = new System.Drawing.Point(106, 22);
             this.chkUSBHD.Name = "chkUSBHD";
             this.chkUSBHD.Size = new System.Drawing.Size(79, 21);
             this.chkUSBHD.TabIndex = 1;
@@ -237,7 +242,7 @@
             // chkUSBDisk
             // 
             this.chkUSBDisk.AutoSize = true;
-            this.chkUSBDisk.Location = new System.Drawing.Point(6, 22);
+            this.chkUSBDisk.Location = new System.Drawing.Point(9, 22);
             this.chkUSBDisk.Name = "chkUSBDisk";
             this.chkUSBDisk.Size = new System.Drawing.Size(91, 21);
             this.chkUSBDisk.TabIndex = 0;
@@ -267,6 +272,22 @@
             this.grpFilter.TabIndex = 25;
             this.grpFilter.TabStop = false;
             this.grpFilter.Text = "过滤选项";
+            // 
+            // txtRegExp
+            // 
+            this.txtRegExp.Location = new System.Drawing.Point(9, 156);
+            this.txtRegExp.Name = "txtRegExp";
+            this.txtRegExp.Size = new System.Drawing.Size(338, 23);
+            this.txtRegExp.TabIndex = 33;
+            // 
+            // lblFileName
+            // 
+            this.lblFileName.AutoSize = true;
+            this.lblFileName.Location = new System.Drawing.Point(6, 136);
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(143, 17);
+            this.lblFileName.TabIndex = 32;
+            this.lblFileName.Text = "文件名规则 (正则表达式):";
             // 
             // btnBroSP
             // 
@@ -386,22 +407,6 @@
             this.lblFileType.TabIndex = 19;
             this.lblFileType.Text = "文件类型:";
             // 
-            // txtRegExp
-            // 
-            this.txtRegExp.Location = new System.Drawing.Point(9, 156);
-            this.txtRegExp.Name = "txtRegExp";
-            this.txtRegExp.Size = new System.Drawing.Size(338, 23);
-            this.txtRegExp.TabIndex = 33;
-            // 
-            // lblFileName
-            // 
-            this.lblFileName.AutoSize = true;
-            this.lblFileName.Location = new System.Drawing.Point(6, 136);
-            this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(143, 17);
-            this.lblFileName.TabIndex = 32;
-            this.lblFileName.Text = "文件名规则 (正则表达式):";
-            // 
             // grpProgram
             // 
             this.grpProgram.Controls.Add(this.chkAutoRun);
@@ -413,101 +418,132 @@
             this.grpProgram.TabStop = false;
             this.grpProgram.Text = "程序设置";
             // 
-            // grpWhitelist
+            // gbWhitelist
             // 
-            this.grpWhitelist.Controls.Add(this.chkWhitelist);
-            this.grpWhitelist.Controls.Add(this.button1);
-            this.grpWhitelist.Controls.Add(this.textBox1);
-            this.grpWhitelist.Controls.Add(this.lblWlVolume);
-            this.grpWhitelist.Controls.Add(this.lblWhitelistTip);
-            this.grpWhitelist.Location = new System.Drawing.Point(15, 208);
-            this.grpWhitelist.Name = "grpWhitelist";
-            this.grpWhitelist.Size = new System.Drawing.Size(353, 91);
-            this.grpWhitelist.TabIndex = 27;
-            this.grpWhitelist.TabStop = false;
-            this.grpWhitelist.Text = "设备白名单";
-            // 
-            // lblWhitelistTip
-            // 
-            this.lblWhitelistTip.AutoSize = true;
-            this.lblWhitelistTip.Location = new System.Drawing.Point(6, 19);
-            this.lblWhitelistTip.Name = "lblWhitelistTip";
-            this.lblWhitelistTip.Size = new System.Drawing.Size(344, 34);
-            this.lblWhitelistTip.TabIndex = 0;
-            this.lblWhitelistTip.Text = "可以通过在可移动设备根目录创建白名单文件来跳过对整个设备\r\n的扫描。";
-            // 
-            // lblWlVolume
-            // 
-            this.lblWlVolume.AutoSize = true;
-            this.lblWlVolume.Location = new System.Drawing.Point(6, 62);
-            this.lblWlVolume.Name = "lblWlVolume";
-            this.lblWlVolume.Size = new System.Drawing.Size(35, 17);
-            this.lblWlVolume.TabIndex = 1;
-            this.lblWlVolume.Text = "设备:";
+            this.gbWhitelist.Controls.Add(this.textBox1);
+            this.gbWhitelist.Controls.Add(this.chkWhitelist);
+            this.gbWhitelist.Controls.Add(this.button1);
+            this.gbWhitelist.Controls.Add(this.lblWlVolume);
+            this.gbWhitelist.Controls.Add(this.lblWhitelistTip);
+            this.gbWhitelist.Location = new System.Drawing.Point(15, 208);
+            this.gbWhitelist.Name = "gbWhitelist";
+            this.gbWhitelist.Size = new System.Drawing.Size(353, 56);
+            this.gbWhitelist.TabIndex = 27;
+            this.gbWhitelist.TabStop = false;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(49, 56);
-            this.textBox1.MaxLength = 2;
+            this.textBox1.Location = new System.Drawing.Point(47, 22);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 2;
+            this.textBox1.Size = new System.Drawing.Size(102, 23);
+            this.textBox1.TabIndex = 5;
+            // 
+            // chkWhitelist
+            // 
+            this.chkWhitelist.AutoSize = true;
+            this.chkWhitelist.Location = new System.Drawing.Point(9, 0);
+            this.chkWhitelist.Name = "chkWhitelist";
+            this.chkWhitelist.Size = new System.Drawing.Size(111, 21);
+            this.chkWhitelist.TabIndex = 4;
+            this.chkWhitelist.Text = "启用设备白名单";
+            this.chkWhitelist.UseVisualStyleBackColor = true;
+            this.chkWhitelist.CheckedChanged += new System.EventHandler(this.chkWhitelist_CheckedChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(155, 56);
+            this.button1.Location = new System.Drawing.Point(155, 22);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "选择设备...";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // chkWhitelist
+            // lblWlVolume
             // 
-            this.chkWhitelist.AutoSize = true;
-            this.chkWhitelist.Location = new System.Drawing.Point(236, 58);
-            this.chkWhitelist.Name = "chkWhitelist";
-            this.chkWhitelist.Size = new System.Drawing.Size(111, 21);
-            this.chkWhitelist.TabIndex = 4;
-            this.chkWhitelist.Text = "启用设备白名单";
-            this.chkWhitelist.UseVisualStyleBackColor = true;
+            this.lblWlVolume.AutoSize = true;
+            this.lblWlVolume.Location = new System.Drawing.Point(6, 28);
+            this.lblWlVolume.Name = "lblWlVolume";
+            this.lblWlVolume.Size = new System.Drawing.Size(35, 17);
+            this.lblWlVolume.TabIndex = 1;
+            this.lblWlVolume.Text = "设备:";
             // 
-            // grpHotkey
+            // lblWhitelistTip
             // 
-            this.grpHotkey.Controls.Add(this.lblHotkeyTip);
-            this.grpHotkey.Location = new System.Drawing.Point(374, 208);
-            this.grpHotkey.Name = "grpHotkey";
-            this.grpHotkey.Size = new System.Drawing.Size(353, 91);
-            this.grpHotkey.TabIndex = 28;
-            this.grpHotkey.TabStop = false;
-            this.grpHotkey.Text = "热键";
+            this.lblWhitelistTip.AutoSize = true;
+            this.lblWhitelistTip.Location = new System.Drawing.Point(6, 19);
+            this.lblWhitelistTip.Name = "lblWhitelistTip";
+            this.lblWhitelistTip.Size = new System.Drawing.Size(0, 17);
+            this.lblWhitelistTip.TabIndex = 0;
             // 
-            // btnCheckUpdate
+            // gbHotkey
             // 
-            this.btnCheckUpdate.Location = new System.Drawing.Point(491, 305);
-            this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(75, 23);
-            this.btnCheckUpdate.TabIndex = 29;
-            this.btnCheckUpdate.Text = "检查更新";
-            this.btnCheckUpdate.UseVisualStyleBackColor = true;
+            this.gbHotkey.Controls.Add(this.chkHotkey);
+            this.gbHotkey.Controls.Add(this.hotkeyControl1);
+            this.gbHotkey.Controls.Add(this.lblHotkey);
+            this.gbHotkey.Location = new System.Drawing.Point(374, 208);
+            this.gbHotkey.Name = "gbHotkey";
+            this.gbHotkey.Size = new System.Drawing.Size(353, 56);
+            this.gbHotkey.TabIndex = 28;
+            this.gbHotkey.TabStop = false;
             // 
-            // lblHotkeyTip
+            // chkHotkey
             // 
-            this.lblHotkeyTip.AutoSize = true;
-            this.lblHotkeyTip.Location = new System.Drawing.Point(6, 19);
-            this.lblHotkeyTip.Name = "lblHotkeyTip";
-            this.lblHotkeyTip.Size = new System.Drawing.Size(260, 17);
-            this.lblHotkeyTip.TabIndex = 0;
-            this.lblHotkeyTip.Text = "热键可以用于在任何情况下直接显示设置窗口。";
+            this.chkHotkey.AutoSize = true;
+            this.chkHotkey.Location = new System.Drawing.Point(9, 1);
+            this.chkHotkey.Name = "chkHotkey";
+            this.chkHotkey.Size = new System.Drawing.Size(75, 21);
+            this.chkHotkey.TabIndex = 2;
+            this.chkHotkey.Text = "启用热键";
+            this.chkHotkey.UseVisualStyleBackColor = true;
+            this.chkHotkey.CheckedChanged += new System.EventHandler(this.chkHotkey_CheckedChanged);
+            // 
+            // hotkeyControl1
+            // 
+            this.hotkeyControl1.Hotkey = System.Windows.Forms.Keys.None;
+            this.hotkeyControl1.HotkeyModifiers = System.Windows.Forms.Keys.None;
+            this.hotkeyControl1.Location = new System.Drawing.Point(47, 22);
+            this.hotkeyControl1.Name = "hotkeyControl1";
+            this.hotkeyControl1.Size = new System.Drawing.Size(100, 23);
+            this.hotkeyControl1.TabIndex = 1;
+            this.hotkeyControl1.Text = "None";
+            // 
+            // lblHotkey
+            // 
+            this.lblHotkey.AutoSize = true;
+            this.lblHotkey.Location = new System.Drawing.Point(6, 25);
+            this.lblHotkey.Name = "lblHotkey";
+            this.lblHotkey.Size = new System.Drawing.Size(35, 17);
+            this.lblHotkey.TabIndex = 0;
+            this.lblHotkey.Text = "热键:";
+            // 
+            // gbCopyTo
+            // 
+            this.gbCopyTo.Controls.Add(this.chkCopyTo);
+            this.gbCopyTo.Location = new System.Drawing.Point(15, 270);
+            this.gbCopyTo.Name = "gbCopyTo";
+            this.gbCopyTo.Size = new System.Drawing.Size(353, 100);
+            this.gbCopyTo.TabIndex = 29;
+            this.gbCopyTo.TabStop = false;
+            // 
+            // chkCopyTo
+            // 
+            this.chkCopyTo.AutoSize = true;
+            this.chkCopyTo.Location = new System.Drawing.Point(9, 0);
+            this.chkCopyTo.Name = "chkCopyTo";
+            this.chkCopyTo.Size = new System.Drawing.Size(183, 21);
+            this.chkCopyTo.TabIndex = 0;
+            this.chkCopyTo.Text = "将复制的文件保存到指定设备";
+            this.chkCopyTo.UseVisualStyleBackColor = true;
+            this.chkCopyTo.CheckedChanged += new System.EventHandler(this.chkCopyTo_CheckedChanged);
             // 
             // FrmSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 336);
-            this.Controls.Add(this.btnCheckUpdate);
-            this.Controls.Add(this.grpHotkey);
-            this.Controls.Add(this.grpWhitelist);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(740, 379);
+            this.Controls.Add(this.gbCopyTo);
+            this.Controls.Add(this.gbHotkey);
+            this.Controls.Add(this.gbWhitelist);
             this.Controls.Add(this.grpProgram);
             this.Controls.Add(this.grpFilter);
             this.Controls.Add(this.gbDriverType);
@@ -533,10 +569,12 @@
             this.grpFilter.PerformLayout();
             this.grpProgram.ResumeLayout(false);
             this.grpProgram.PerformLayout();
-            this.grpWhitelist.ResumeLayout(false);
-            this.grpWhitelist.PerformLayout();
-            this.grpHotkey.ResumeLayout(false);
-            this.grpHotkey.PerformLayout();
+            this.gbWhitelist.ResumeLayout(false);
+            this.gbWhitelist.PerformLayout();
+            this.gbHotkey.ResumeLayout(false);
+            this.gbHotkey.PerformLayout();
+            this.gbCopyTo.ResumeLayout(false);
+            this.gbCopyTo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,14 +617,17 @@
         private System.Windows.Forms.Label lblFileSize;
         private System.Windows.Forms.Label lblFileType;
         private System.Windows.Forms.GroupBox grpProgram;
-        private System.Windows.Forms.GroupBox grpWhitelist;
+        private System.Windows.Forms.GroupBox gbWhitelist;
         private System.Windows.Forms.Label lblWhitelistTip;
         private System.Windows.Forms.CheckBox chkWhitelist;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblWlVolume;
-        private System.Windows.Forms.GroupBox grpHotkey;
-        private System.Windows.Forms.Button btnCheckUpdate;
-        private System.Windows.Forms.Label lblHotkeyTip;
+        private System.Windows.Forms.GroupBox gbHotkey;
+        private System.Windows.Forms.Label lblHotkey;
+        private HotkeyControl hotkeyControl1;
+        private System.Windows.Forms.CheckBox chkHotkey;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox gbCopyTo;
+        private System.Windows.Forms.CheckBox chkCopyTo;
     }
 }
