@@ -35,6 +35,9 @@ namespace FileThief
 
         public static string ConHotkeyE, ConHotkey;
 
+        public static string ConCopyTo, ConCtDevice;
+        public static string ConDelOri;
+
         public static bool Status = true;
 
 #region "操作 Ini"

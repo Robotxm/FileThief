@@ -53,7 +53,7 @@ namespace FileThief
 
         private void btnOpenSource_Click(object sender, EventArgs e)
         {
-            if (rtbeOpenSource.Visible)
+            if (rtbeOpenSource .Visible)
             {
                 rtbeOpenSource.Visible = false;
                 btnOpenSource.Text = "开源项目";
@@ -69,5 +69,10 @@ namespace FileThief
         {
             Close();
         }
+        private void rtbeOpenSource_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
+        
     }
 }

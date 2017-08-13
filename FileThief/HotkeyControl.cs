@@ -274,7 +274,7 @@ namespace FileThief
                         // User pressed Shift and an invalid key (e.g. a letter or a number),
                         // that needs another set of modifier keys
                         this._hotkey = Keys.None;
-                        this.Text = this._modifiers.ToString() + " + Invalid key";
+                        this.Text = this._modifiers.ToString().Replace("Control", "Ctrl").Replace(", ", " + ") + " + Invalid key";
                         return;
                     }
                 }
@@ -284,7 +284,7 @@ namespace FileThief
                 {
                     // Ctrl+Alt+4 etc won't work; reset hotkey and tell the user
                     this._hotkey = Keys.None;
-                    this.Text = this._modifiers.ToString() + " + Invalid key";
+                    this.Text = this._modifiers.ToString().Replace("Control", "Ctrl").Replace(", ", " + ") + " + Invalid key";
                     return;
                 }
             }
@@ -300,17 +300,17 @@ namespace FileThief
                 {
                     // We get here if we've got a hotkey that is valid without a modifier,
                     // like F1-F12, Media-keys etc.
-                    this.Text = this._hotkey.ToString();
+                    this.Text = this._hotkey.ToString().Replace(", ", " + ");
                     return;
                 }
             }
 
             // I have no idea why this is needed, but it is. Without this code, pressing only Ctrl
-            // will show up as "Control + ControlKey", etc.
+            // will show up as "CTrl + ControlKey", etc.
             if (this._hotkey == Keys.Menu /* Alt */ || this._hotkey == Keys.ShiftKey || this._hotkey == Keys.ControlKey)
                 this._hotkey = Keys.None;
 
-            this.Text = this._modifiers.ToString() + " + " + this._hotkey.ToString();
+            this.Text = this._modifiers.ToString().Replace("Control","Ctrl").Replace(", "," + ") + " + " + this._hotkey.ToString();
         }
     }
 }

@@ -67,6 +67,7 @@
             this.lblFileType = new System.Windows.Forms.Label();
             this.grpProgram = new System.Windows.Forms.GroupBox();
             this.gbWhitelist = new System.Windows.Forms.GroupBox();
+            this.btnCreateWl = new System.Windows.Forms.Button();
             this.txtWlDrive = new System.Windows.Forms.TextBox();
             this.chkWhitelist = new System.Windows.Forms.CheckBox();
             this.btnSelWhitelist = new System.Windows.Forms.Button();
@@ -74,14 +75,14 @@
             this.lblWhitelistTip = new System.Windows.Forms.Label();
             this.gbHotkey = new System.Windows.Forms.GroupBox();
             this.chkHotkey = new System.Windows.Forms.CheckBox();
-            this.hotkeyControl1 = new FileThief.HotkeyControl();
+            this.hkcHotkey = new FileThief.HotkeyControl();
             this.lblHotkey = new System.Windows.Forms.Label();
             this.gbCopyTo = new System.Windows.Forms.GroupBox();
-            this.chkCopyTo = new System.Windows.Forms.CheckBox();
             this.txtCopyToDevice = new System.Windows.Forms.TextBox();
             this.btnSelCopyTo = new System.Windows.Forms.Button();
             this.lblCopyToDevice = new System.Windows.Forms.Label();
-            this.btnCreateWl = new System.Windows.Forms.Button();
+            this.chkCopyTo = new System.Windows.Forms.CheckBox();
+            this.chkDelOri = new System.Windows.Forms.CheckBox();
             this.gbLog.SuspendLayout();
             this.gbDriverType.SuspendLayout();
             this.grpFilter.SuspendLayout();
@@ -436,13 +437,23 @@
             this.gbWhitelist.TabIndex = 27;
             this.gbWhitelist.TabStop = false;
             // 
+            // btnCreateWl
+            // 
+            this.btnCreateWl.Location = new System.Drawing.Point(217, 22);
+            this.btnCreateWl.Name = "btnCreateWl";
+            this.btnCreateWl.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateWl.TabIndex = 6;
+            this.btnCreateWl.Text = "创建";
+            this.btnCreateWl.UseVisualStyleBackColor = true;
+            this.btnCreateWl.Click += new System.EventHandler(this.btnCreateWl_Click);
+            // 
             // txtWlDrive
             // 
             this.txtWlDrive.BackColor = System.Drawing.SystemColors.Window;
             this.txtWlDrive.Location = new System.Drawing.Point(47, 22);
             this.txtWlDrive.Name = "txtWlDrive";
             this.txtWlDrive.ReadOnly = true;
-            this.txtWlDrive.Size = new System.Drawing.Size(102, 23);
+            this.txtWlDrive.Size = new System.Drawing.Size(83, 23);
             this.txtWlDrive.TabIndex = 5;
             // 
             // chkWhitelist
@@ -458,7 +469,7 @@
             // 
             // btnSelWhitelist
             // 
-            this.btnSelWhitelist.Location = new System.Drawing.Point(155, 22);
+            this.btnSelWhitelist.Location = new System.Drawing.Point(136, 22);
             this.btnSelWhitelist.Name = "btnSelWhitelist";
             this.btnSelWhitelist.Size = new System.Drawing.Size(75, 23);
             this.btnSelWhitelist.TabIndex = 3;
@@ -486,7 +497,7 @@
             // gbHotkey
             // 
             this.gbHotkey.Controls.Add(this.chkHotkey);
-            this.gbHotkey.Controls.Add(this.hotkeyControl1);
+            this.gbHotkey.Controls.Add(this.hkcHotkey);
             this.gbHotkey.Controls.Add(this.lblHotkey);
             this.gbHotkey.Location = new System.Drawing.Point(374, 208);
             this.gbHotkey.Name = "gbHotkey";
@@ -505,15 +516,15 @@
             this.chkHotkey.UseVisualStyleBackColor = true;
             this.chkHotkey.CheckedChanged += new System.EventHandler(this.chkHotkey_CheckedChanged);
             // 
-            // hotkeyControl1
+            // hkcHotkey
             // 
-            this.hotkeyControl1.Hotkey = System.Windows.Forms.Keys.None;
-            this.hotkeyControl1.HotkeyModifiers = System.Windows.Forms.Keys.None;
-            this.hotkeyControl1.Location = new System.Drawing.Point(47, 22);
-            this.hotkeyControl1.Name = "hotkeyControl1";
-            this.hotkeyControl1.Size = new System.Drawing.Size(100, 23);
-            this.hotkeyControl1.TabIndex = 1;
-            this.hotkeyControl1.Text = "None";
+            this.hkcHotkey.Hotkey = System.Windows.Forms.Keys.None;
+            this.hkcHotkey.HotkeyModifiers = System.Windows.Forms.Keys.None;
+            this.hkcHotkey.Location = new System.Drawing.Point(47, 22);
+            this.hkcHotkey.Name = "hkcHotkey";
+            this.hkcHotkey.Size = new System.Drawing.Size(100, 23);
+            this.hkcHotkey.TabIndex = 1;
+            this.hkcHotkey.Text = "None";
             // 
             // lblHotkey
             // 
@@ -526,6 +537,7 @@
             // 
             // gbCopyTo
             // 
+            this.gbCopyTo.Controls.Add(this.chkDelOri);
             this.gbCopyTo.Controls.Add(this.txtCopyToDevice);
             this.gbCopyTo.Controls.Add(this.btnSelCopyTo);
             this.gbCopyTo.Controls.Add(this.lblCopyToDevice);
@@ -536,27 +548,16 @@
             this.gbCopyTo.TabIndex = 29;
             this.gbCopyTo.TabStop = false;
             // 
-            // chkCopyTo
-            // 
-            this.chkCopyTo.AutoSize = true;
-            this.chkCopyTo.Location = new System.Drawing.Point(9, 0);
-            this.chkCopyTo.Name = "chkCopyTo";
-            this.chkCopyTo.Size = new System.Drawing.Size(183, 21);
-            this.chkCopyTo.TabIndex = 0;
-            this.chkCopyTo.Text = "将复制的文件保存到指定设备";
-            this.chkCopyTo.UseVisualStyleBackColor = true;
-            this.chkCopyTo.CheckedChanged += new System.EventHandler(this.chkCopyTo_CheckedChanged);
-            // 
             // txtCopyToDevice
             // 
             this.txtCopyToDevice.Location = new System.Drawing.Point(47, 27);
             this.txtCopyToDevice.Name = "txtCopyToDevice";
-            this.txtCopyToDevice.Size = new System.Drawing.Size(102, 23);
+            this.txtCopyToDevice.Size = new System.Drawing.Size(83, 23);
             this.txtCopyToDevice.TabIndex = 8;
             // 
             // btnSelCopyTo
             // 
-            this.btnSelCopyTo.Location = new System.Drawing.Point(155, 27);
+            this.btnSelCopyTo.Location = new System.Drawing.Point(136, 27);
             this.btnSelCopyTo.Name = "btnSelCopyTo";
             this.btnSelCopyTo.Size = new System.Drawing.Size(75, 23);
             this.btnSelCopyTo.TabIndex = 7;
@@ -573,15 +574,26 @@
             this.lblCopyToDevice.TabIndex = 6;
             this.lblCopyToDevice.Text = "设备:";
             // 
-            // btnCreateWl
+            // chkCopyTo
             // 
-            this.btnCreateWl.Location = new System.Drawing.Point(236, 22);
-            this.btnCreateWl.Name = "btnCreateWl";
-            this.btnCreateWl.Size = new System.Drawing.Size(75, 23);
-            this.btnCreateWl.TabIndex = 6;
-            this.btnCreateWl.Text = "创建";
-            this.btnCreateWl.UseVisualStyleBackColor = true;
-            this.btnCreateWl.Click += new System.EventHandler(this.btnCreateWl_Click);
+            this.chkCopyTo.AutoSize = true;
+            this.chkCopyTo.Location = new System.Drawing.Point(9, 0);
+            this.chkCopyTo.Name = "chkCopyTo";
+            this.chkCopyTo.Size = new System.Drawing.Size(183, 21);
+            this.chkCopyTo.TabIndex = 0;
+            this.chkCopyTo.Text = "将复制的文件保存到指定设备";
+            this.chkCopyTo.UseVisualStyleBackColor = true;
+            this.chkCopyTo.CheckedChanged += new System.EventHandler(this.chkCopyTo_CheckedChanged);
+            // 
+            // chkDelOri
+            // 
+            this.chkDelOri.AutoSize = true;
+            this.chkDelOri.Location = new System.Drawing.Point(217, 29);
+            this.chkDelOri.Name = "chkDelOri";
+            this.chkDelOri.Size = new System.Drawing.Size(123, 21);
+            this.chkDelOri.TabIndex = 9;
+            this.chkDelOri.Text = "保存后删除原文件";
+            this.chkDelOri.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
@@ -671,7 +683,7 @@
         private System.Windows.Forms.Label lblWlVolume;
         private System.Windows.Forms.GroupBox gbHotkey;
         private System.Windows.Forms.Label lblHotkey;
-        private HotkeyControl hotkeyControl1;
+        private HotkeyControl hkcHotkey;
         private System.Windows.Forms.CheckBox chkHotkey;
         private System.Windows.Forms.TextBox txtWlDrive;
         private System.Windows.Forms.GroupBox gbCopyTo;
@@ -680,5 +692,6 @@
         private System.Windows.Forms.Button btnSelCopyTo;
         private System.Windows.Forms.Label lblCopyToDevice;
         private System.Windows.Forms.Button btnCreateWl;
+        private System.Windows.Forms.CheckBox chkDelOri;
     }
 }
