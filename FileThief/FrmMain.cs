@@ -85,7 +85,7 @@ namespace FileThief
                 ClsMain.WriteIni("Driver", "VolumeLabelMode", "0", ClsMain.StrConfig);
 
                 ClsMain.WriteIni("Log", "WriteLog", "1", ClsMain.StrConfig);
-                ClsMain.WriteIni("Log", "LogPath", Application.StartupPath + "\\FileThief.log", ClsMain.StrConfig);
+                ClsMain.WriteIni("Log", "LogPath", "", ClsMain.StrConfig);
                 ClsMain.WriteIni("Log", "LogError", "1", ClsMain.StrConfig);
                 ClsMain.WriteIni("Log", "LogInfo", "1", ClsMain.StrConfig);
 

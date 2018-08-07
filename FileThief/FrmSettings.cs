@@ -62,7 +62,7 @@ namespace FileThief
             ManageCheckGroupBox(chkWhitelist, gbWhitelist);
 
             chkCopyTo.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConCopyTo));
-            txtCopyToDevice.Text = ClsMain.ConCtDevice;
+            txtCopyTo.Text = ClsMain.ConCtDevice;
             chkDelOri.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConDelOri));
             ManageCheckGroupBox(chkCopyTo, gbCopyTo);
         }
@@ -98,29 +98,29 @@ namespace FileThief
             ClsMain.WriteIni("Hotkey","Hotkey",hkcHotkey.Text,ClsMain.StrConfig);
 
             ClsMain.WriteIni("CopyTo", "Enabled", Convert.ToInt32(chkHotkey.Checked).ToString(), ClsMain.StrConfig);
-            ClsMain.WriteIni("CopyTo", "SaveDevice", txtCopyToDevice.Text, ClsMain.StrConfig);
+            ClsMain.WriteIni("CopyTo", "SaveDevice", txtCopyTo.Text, ClsMain.StrConfig);
             ClsMain.WriteIni("CopyTo", "DeleteOriginalFiles", Convert.ToInt32(chkDelOri.Checked).ToString(), ClsMain.StrConfig);
 
             var bootStatus = ClsMain.SetAutoBoot(chkAutoRun.Checked);
             if (bootStatus == -1)
             {
-                MessageBox.Show("设置开机启动失败！\n其他设置将继续保存。", @"FileThief", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("设置开机启动失败！\n其他设置将继续保存。", "FileThief", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ClsMain.WriteIni("General", "Startup", 0.ToString(), ClsMain.StrConfig);
             }
 
-            MessageBox.Show(@"保存成功！请重启 FileThief 以使更改生效！",@"FileThief",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            MessageBox.Show("保存成功！请重启 FileThief 以使更改生效！","FileThief",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
 
         private void btnBroSP_Click(object sender, EventArgs e)
         {
-            fdb.Description = @"请选择复制文件的保存位置。";
+            fdb.Description = "请选择复制文件的保存位置。";
             fdb.ShowDialog();
             if (fdb.SelectedPath != "") txtPath.Text = fdb.SelectedPath;
         }
 
         private void btnBroLog_Click(object sender, EventArgs e)
         {
-            sfd.Title = @"日志文件保存位置";
+            sfd.Title = "日志文件保存位置";
             sfd.CheckPathExists = true;
             if(txtPath.Text!=null) sfd.InitialDirectory = System.IO.Path.GetDirectoryName(txtLogPath.Text);
             sfd.ShowDialog();
