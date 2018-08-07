@@ -36,7 +36,6 @@ namespace FileThief
                           "对于不正确地使用造成的任何后果，由用户负责。\r\n\r\n" +
                           "FileThief 在 GPL v3 协议下开放源代码。\r\n" +
                           "更多信息请访问 GitHub: ";
-            rtbeOpenSource.Height = Height - rtbeOpenSource.Margin.Top - btnOpenSource.Height - btnOpenSource.Margin.Bottom;
         }
 
         private void btnOpenSource_Click(object sender, EventArgs e)

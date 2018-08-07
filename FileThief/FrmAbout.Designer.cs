@@ -37,9 +37,7 @@ namespace FileThief
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnOpenSource = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.rtbeOpenSource = new FileThief.RichTextBoxEx();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -67,7 +65,7 @@ namespace FileThief
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(372, 422);
+            this.linkLabel2.Location = new System.Drawing.Point(372, 411);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(561, 39);
@@ -79,7 +77,7 @@ namespace FileThief
             // btnClose
             // 
             this.btnClose.Location = new System.Drawing.Point(862, 504);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(8);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(188, 58);
             this.btnClose.TabIndex = 5;
@@ -90,7 +88,7 @@ namespace FileThief
             // btnOpenSource
             // 
             this.btnOpenSource.Location = new System.Drawing.Point(660, 504);
-            this.btnOpenSource.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.btnOpenSource.Margin = new System.Windows.Forms.Padding(8);
             this.btnOpenSource.Name = "btnOpenSource";
             this.btnOpenSource.Size = new System.Drawing.Size(188, 58);
             this.btnOpenSource.TabIndex = 6;
@@ -98,26 +96,14 @@ namespace FileThief
             this.btnOpenSource.UseVisualStyleBackColor = true;
             this.btnOpenSource.Click += new System.EventHandler(this.btnOpenSource_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Image = global::FileThief.Properties.Resources.FileThief;
-            this.pictureBox1.Location = new System.Drawing.Point(890, 22);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
             // rtbeOpenSource
             // 
             this.rtbeOpenSource.BackColor = System.Drawing.SystemColors.Window;
             this.rtbeOpenSource.Location = new System.Drawing.Point(28, 26);
-            this.rtbeOpenSource.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.rtbeOpenSource.Margin = new System.Windows.Forms.Padding(8);
             this.rtbeOpenSource.Name = "rtbeOpenSource";
             this.rtbeOpenSource.ReadOnly = true;
-            this.rtbeOpenSource.Size = new System.Drawing.Size(1021, 468);
+            this.rtbeOpenSource.Size = new System.Drawing.Size(1021, 462);
             this.rtbeOpenSource.TabIndex = 7;
             this.rtbeOpenSource.Text = resources.GetString("rtbeOpenSource.Text");
             this.rtbeOpenSource.Visible = false;
@@ -132,7 +118,6 @@ namespace FileThief
             this.Controls.Add(this.rtbeOpenSource);
             this.Controls.Add(this.btnOpenSource);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
@@ -146,7 +131,6 @@ namespace FileThief
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "关于 FileThief";
             this.Load += new System.EventHandler(this.FrmAbout_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,7 +141,6 @@ namespace FileThief
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnOpenSource;
         private FileThief.RichTextBoxEx  rtbeOpenSource;
