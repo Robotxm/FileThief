@@ -41,11 +41,27 @@
             this.grpProgram = new System.Windows.Forms.GroupBox();
             this.gbHotkey = new System.Windows.Forms.GroupBox();
             this.chkHotkey = new System.Windows.Forms.CheckBox();
-            this.lblHotkey = new System.Windows.Forms.Label();
             this.hkcHotkey = new FileThief.HotkeyControl();
+            this.lblHotkey = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.gbDriverType = new System.Windows.Forms.GroupBox();
+            this.chkROM = new System.Windows.Forms.CheckBox();
+            this.chkUSBHD = new System.Windows.Forms.CheckBox();
+            this.chkUSBDisk = new System.Windows.Forms.CheckBox();
+            this.gbCopyTo = new System.Windows.Forms.GroupBox();
+            this.chkDelOri = new System.Windows.Forms.CheckBox();
+            this.txtCopyTo = new System.Windows.Forms.TextBox();
+            this.btnSelCopyTo = new System.Windows.Forms.Button();
+            this.lblCopyTo = new System.Windows.Forms.Label();
+            this.chkCopyTo = new System.Windows.Forms.CheckBox();
+            this.gbWhitelist = new System.Windows.Forms.GroupBox();
+            this.btnCreateWl = new System.Windows.Forms.Button();
+            this.txtWlDrive = new System.Windows.Forms.TextBox();
+            this.chkWhitelist = new System.Windows.Forms.CheckBox();
+            this.btnSelWhitelist = new System.Windows.Forms.Button();
+            this.lblWlVolume = new System.Windows.Forms.Label();
+            this.lblWhitelistTip = new System.Windows.Forms.Label();
             this.grpFilter = new System.Windows.Forms.GroupBox();
             this.txtRegExp = new System.Windows.Forms.TextBox();
             this.lblFileName = new System.Windows.Forms.Label();
@@ -62,23 +78,7 @@
             this.lblSavePath = new System.Windows.Forms.Label();
             this.lblFileSize = new System.Windows.Forms.Label();
             this.lblFileType = new System.Windows.Forms.Label();
-            this.gbWhitelist = new System.Windows.Forms.GroupBox();
-            this.btnCreateWl = new System.Windows.Forms.Button();
-            this.txtWlDrive = new System.Windows.Forms.TextBox();
-            this.chkWhitelist = new System.Windows.Forms.CheckBox();
-            this.btnSelWhitelist = new System.Windows.Forms.Button();
-            this.lblWlVolume = new System.Windows.Forms.Label();
-            this.lblWhitelistTip = new System.Windows.Forms.Label();
-            this.gbCopyTo = new System.Windows.Forms.GroupBox();
-            this.chkDelOri = new System.Windows.Forms.CheckBox();
-            this.txtCopyTo = new System.Windows.Forms.TextBox();
-            this.btnSelCopyTo = new System.Windows.Forms.Button();
-            this.lblCopyTo = new System.Windows.Forms.Label();
-            this.chkCopyTo = new System.Windows.Forms.CheckBox();
-            this.gbDriverType = new System.Windows.Forms.GroupBox();
-            this.chkROM = new System.Windows.Forms.CheckBox();
-            this.chkUSBHD = new System.Windows.Forms.CheckBox();
-            this.chkUSBDisk = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gbLog = new System.Windows.Forms.GroupBox();
             this.chkLogInfo = new System.Windows.Forms.CheckBox();
             this.btnBroLog = new System.Windows.Forms.Button();
@@ -90,11 +90,11 @@
             this.gbHotkey.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.grpFilter.SuspendLayout();
-            this.gbWhitelist.SuspendLayout();
-            this.gbCopyTo.SuspendLayout();
             this.gbDriverType.SuspendLayout();
+            this.gbCopyTo.SuspendLayout();
+            this.gbWhitelist.SuspendLayout();
+            this.grpFilter.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.gbLog.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,7 +102,7 @@
             // 
             this.chkAutoRun.AutoSize = true;
             this.chkAutoRun.Location = new System.Drawing.Point(22, 52);
-            this.chkAutoRun.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.chkAutoRun.Margin = new System.Windows.Forms.Padding(8);
             this.chkAutoRun.Name = "chkAutoRun";
             this.chkAutoRun.Size = new System.Drawing.Size(175, 43);
             this.chkAutoRun.TabIndex = 19;
@@ -113,7 +113,7 @@
             // 
             this.chkSilent.AutoSize = true;
             this.chkSilent.Location = new System.Drawing.Point(232, 52);
-            this.chkSilent.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.chkSilent.Margin = new System.Windows.Forms.Padding(8);
             this.chkSilent.Name = "chkSilent";
             this.chkSilent.Size = new System.Drawing.Size(175, 43);
             this.chkSilent.TabIndex = 20;
@@ -123,7 +123,7 @@
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(774, 1122);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(8);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(188, 58);
             this.btnSave.TabIndex = 21;
@@ -134,7 +134,7 @@
             // btnAbout
             // 
             this.btnAbout.Location = new System.Drawing.Point(570, 1122);
-            this.btnAbout.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.btnAbout.Margin = new System.Windows.Forms.Padding(8);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(188, 58);
             this.btnAbout.TabIndex = 22;
@@ -157,9 +157,9 @@
             this.grpProgram.Controls.Add(this.chkAutoRun);
             this.grpProgram.Controls.Add(this.chkSilent);
             this.grpProgram.Location = new System.Drawing.Point(22, 225);
-            this.grpProgram.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.grpProgram.Margin = new System.Windows.Forms.Padding(8);
             this.grpProgram.Name = "grpProgram";
-            this.grpProgram.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.grpProgram.Padding = new System.Windows.Forms.Padding(8);
             this.grpProgram.Size = new System.Drawing.Size(882, 120);
             this.grpProgram.TabIndex = 26;
             this.grpProgram.TabStop = false;
@@ -171,9 +171,9 @@
             this.gbHotkey.Controls.Add(this.hkcHotkey);
             this.gbHotkey.Controls.Add(this.lblHotkey);
             this.gbHotkey.Location = new System.Drawing.Point(22, 373);
-            this.gbHotkey.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.gbHotkey.Margin = new System.Windows.Forms.Padding(8);
             this.gbHotkey.Name = "gbHotkey";
-            this.gbHotkey.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.gbHotkey.Padding = new System.Windows.Forms.Padding(8);
             this.gbHotkey.Size = new System.Drawing.Size(882, 140);
             this.gbHotkey.TabIndex = 28;
             this.gbHotkey.TabStop = false;
@@ -182,23 +182,13 @@
             // 
             this.chkHotkey.AutoSize = true;
             this.chkHotkey.Location = new System.Drawing.Point(22, 2);
-            this.chkHotkey.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.chkHotkey.Margin = new System.Windows.Forms.Padding(8);
             this.chkHotkey.Name = "chkHotkey";
             this.chkHotkey.Size = new System.Drawing.Size(175, 43);
             this.chkHotkey.TabIndex = 2;
             this.chkHotkey.Text = "启用热键";
             this.chkHotkey.UseVisualStyleBackColor = true;
             this.chkHotkey.CheckedChanged += new System.EventHandler(this.chkHotkey_CheckedChanged);
-            // 
-            // lblHotkey
-            // 
-            this.lblHotkey.AutoSize = true;
-            this.lblHotkey.Location = new System.Drawing.Point(16, 62);
-            this.lblHotkey.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblHotkey.Name = "lblHotkey";
-            this.lblHotkey.Size = new System.Drawing.Size(84, 39);
-            this.lblHotkey.TabIndex = 0;
-            this.lblHotkey.Text = "热键:";
             // 
             // hkcHotkey
             // 
@@ -210,6 +200,16 @@
             this.hkcHotkey.Size = new System.Drawing.Size(244, 47);
             this.hkcHotkey.TabIndex = 1;
             this.hkcHotkey.Text = "None";
+            // 
+            // lblHotkey
+            // 
+            this.lblHotkey.AutoSize = true;
+            this.lblHotkey.Location = new System.Drawing.Point(16, 62);
+            this.lblHotkey.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblHotkey.Name = "lblHotkey";
+            this.lblHotkey.Size = new System.Drawing.Size(84, 39);
+            this.lblHotkey.TabIndex = 0;
+            this.lblHotkey.Text = "热键:";
             // 
             // tabControl1
             // 
@@ -235,18 +235,195 @@
             this.tabPage1.Text = "复制设置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // gbDriverType
             // 
-            this.tabPage2.Controls.Add(this.gbLog);
-            this.tabPage2.Controls.Add(this.gbHotkey);
-            this.tabPage2.Controls.Add(this.grpProgram);
-            this.tabPage2.Location = new System.Drawing.Point(10, 56);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(926, 966);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "程序设置";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.gbDriverType.Controls.Add(this.chkROM);
+            this.gbDriverType.Controls.Add(this.chkUSBHD);
+            this.gbDriverType.Controls.Add(this.chkUSBDisk);
+            this.gbDriverType.Location = new System.Drawing.Point(22, 819);
+            this.gbDriverType.Margin = new System.Windows.Forms.Padding(8);
+            this.gbDriverType.Name = "gbDriverType";
+            this.gbDriverType.Padding = new System.Windows.Forms.Padding(8);
+            this.gbDriverType.Size = new System.Drawing.Size(882, 124);
+            this.gbDriverType.TabIndex = 31;
+            this.gbDriverType.TabStop = false;
+            this.gbDriverType.Text = "可移动设备类型";
+            // 
+            // chkROM
+            // 
+            this.chkROM.AutoSize = true;
+            this.chkROM.Location = new System.Drawing.Point(478, 56);
+            this.chkROM.Margin = new System.Windows.Forms.Padding(8);
+            this.chkROM.Name = "chkROM";
+            this.chkROM.Size = new System.Drawing.Size(344, 43);
+            this.chkROM.TabIndex = 2;
+            this.chkROM.Text = "光盘 (包括挂载的ISO)";
+            this.chkROM.UseVisualStyleBackColor = true;
+            // 
+            // chkUSBHD
+            // 
+            this.chkUSBHD.AutoSize = true;
+            this.chkUSBHD.Location = new System.Drawing.Point(264, 56);
+            this.chkUSBHD.Margin = new System.Windows.Forms.Padding(8);
+            this.chkUSBHD.Name = "chkUSBHD";
+            this.chkUSBHD.Size = new System.Drawing.Size(182, 43);
+            this.chkUSBHD.TabIndex = 1;
+            this.chkUSBHD.Text = "USB 硬盘";
+            this.chkUSBHD.UseVisualStyleBackColor = true;
+            // 
+            // chkUSBDisk
+            // 
+            this.chkUSBDisk.AutoSize = true;
+            this.chkUSBDisk.Location = new System.Drawing.Point(22, 56);
+            this.chkUSBDisk.Margin = new System.Windows.Forms.Padding(8);
+            this.chkUSBDisk.Name = "chkUSBDisk";
+            this.chkUSBDisk.Size = new System.Drawing.Size(212, 43);
+            this.chkUSBDisk.TabIndex = 0;
+            this.chkUSBDisk.Text = "USB 闪存盘";
+            this.chkUSBDisk.UseVisualStyleBackColor = true;
+            // 
+            // gbCopyTo
+            // 
+            this.gbCopyTo.Controls.Add(this.chkDelOri);
+            this.gbCopyTo.Controls.Add(this.txtCopyTo);
+            this.gbCopyTo.Controls.Add(this.btnSelCopyTo);
+            this.gbCopyTo.Controls.Add(this.lblCopyTo);
+            this.gbCopyTo.Controls.Add(this.chkCopyTo);
+            this.gbCopyTo.Location = new System.Drawing.Point(22, 655);
+            this.gbCopyTo.Margin = new System.Windows.Forms.Padding(8);
+            this.gbCopyTo.Name = "gbCopyTo";
+            this.gbCopyTo.Padding = new System.Windows.Forms.Padding(8);
+            this.gbCopyTo.Size = new System.Drawing.Size(882, 148);
+            this.gbCopyTo.TabIndex = 30;
+            this.gbCopyTo.TabStop = false;
+            // 
+            // chkDelOri
+            // 
+            this.chkDelOri.AutoSize = true;
+            this.chkDelOri.Location = new System.Drawing.Point(562, 72);
+            this.chkDelOri.Margin = new System.Windows.Forms.Padding(8);
+            this.chkDelOri.Name = "chkDelOri";
+            this.chkDelOri.Size = new System.Drawing.Size(295, 43);
+            this.chkDelOri.TabIndex = 9;
+            this.chkDelOri.Text = "保存后删除原文件";
+            this.chkDelOri.UseVisualStyleBackColor = true;
+            // 
+            // txtCopyTo
+            // 
+            this.txtCopyTo.BackColor = System.Drawing.SystemColors.Window;
+            this.txtCopyTo.Location = new System.Drawing.Point(118, 68);
+            this.txtCopyTo.Margin = new System.Windows.Forms.Padding(8);
+            this.txtCopyTo.Name = "txtCopyTo";
+            this.txtCopyTo.ReadOnly = true;
+            this.txtCopyTo.Size = new System.Drawing.Size(220, 47);
+            this.txtCopyTo.TabIndex = 8;
+            // 
+            // btnSelCopyTo
+            // 
+            this.btnSelCopyTo.Location = new System.Drawing.Point(358, 66);
+            this.btnSelCopyTo.Margin = new System.Windows.Forms.Padding(8);
+            this.btnSelCopyTo.Name = "btnSelCopyTo";
+            this.btnSelCopyTo.Size = new System.Drawing.Size(188, 58);
+            this.btnSelCopyTo.TabIndex = 7;
+            this.btnSelCopyTo.Text = "浏览...";
+            this.btnSelCopyTo.UseVisualStyleBackColor = true;
+            // 
+            // lblCopyTo
+            // 
+            this.lblCopyTo.AutoSize = true;
+            this.lblCopyTo.Location = new System.Drawing.Point(16, 82);
+            this.lblCopyTo.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblCopyTo.Name = "lblCopyTo";
+            this.lblCopyTo.Size = new System.Drawing.Size(84, 39);
+            this.lblCopyTo.TabIndex = 6;
+            this.lblCopyTo.Text = "设备:";
+            // 
+            // chkCopyTo
+            // 
+            this.chkCopyTo.AutoSize = true;
+            this.chkCopyTo.Location = new System.Drawing.Point(22, 0);
+            this.chkCopyTo.Margin = new System.Windows.Forms.Padding(8);
+            this.chkCopyTo.Name = "chkCopyTo";
+            this.chkCopyTo.Size = new System.Drawing.Size(445, 43);
+            this.chkCopyTo.TabIndex = 0;
+            this.chkCopyTo.Text = "将复制的文件保存到指定设备";
+            this.chkCopyTo.UseVisualStyleBackColor = true;
+            // 
+            // gbWhitelist
+            // 
+            this.gbWhitelist.Controls.Add(this.btnCreateWl);
+            this.gbWhitelist.Controls.Add(this.txtWlDrive);
+            this.gbWhitelist.Controls.Add(this.chkWhitelist);
+            this.gbWhitelist.Controls.Add(this.btnSelWhitelist);
+            this.gbWhitelist.Controls.Add(this.lblWlVolume);
+            this.gbWhitelist.Controls.Add(this.lblWhitelistTip);
+            this.gbWhitelist.Location = new System.Drawing.Point(22, 499);
+            this.gbWhitelist.Margin = new System.Windows.Forms.Padding(8);
+            this.gbWhitelist.Name = "gbWhitelist";
+            this.gbWhitelist.Padding = new System.Windows.Forms.Padding(8);
+            this.gbWhitelist.Size = new System.Drawing.Size(882, 140);
+            this.gbWhitelist.TabIndex = 28;
+            this.gbWhitelist.TabStop = false;
+            // 
+            // btnCreateWl
+            // 
+            this.btnCreateWl.Location = new System.Drawing.Point(676, 54);
+            this.btnCreateWl.Margin = new System.Windows.Forms.Padding(8);
+            this.btnCreateWl.Name = "btnCreateWl";
+            this.btnCreateWl.Size = new System.Drawing.Size(188, 58);
+            this.btnCreateWl.TabIndex = 6;
+            this.btnCreateWl.Text = "创建";
+            this.btnCreateWl.UseVisualStyleBackColor = true;
+            // 
+            // txtWlDrive
+            // 
+            this.txtWlDrive.BackColor = System.Drawing.SystemColors.Window;
+            this.txtWlDrive.Location = new System.Drawing.Point(118, 56);
+            this.txtWlDrive.Margin = new System.Windows.Forms.Padding(8);
+            this.txtWlDrive.Name = "txtWlDrive";
+            this.txtWlDrive.ReadOnly = true;
+            this.txtWlDrive.Size = new System.Drawing.Size(336, 47);
+            this.txtWlDrive.TabIndex = 5;
+            // 
+            // chkWhitelist
+            // 
+            this.chkWhitelist.AutoSize = true;
+            this.chkWhitelist.Location = new System.Drawing.Point(22, 0);
+            this.chkWhitelist.Margin = new System.Windows.Forms.Padding(8);
+            this.chkWhitelist.Name = "chkWhitelist";
+            this.chkWhitelist.Size = new System.Drawing.Size(265, 43);
+            this.chkWhitelist.TabIndex = 4;
+            this.chkWhitelist.Text = "启用设备白名单";
+            this.chkWhitelist.UseVisualStyleBackColor = true;
+            // 
+            // btnSelWhitelist
+            // 
+            this.btnSelWhitelist.Location = new System.Drawing.Point(474, 54);
+            this.btnSelWhitelist.Margin = new System.Windows.Forms.Padding(8);
+            this.btnSelWhitelist.Name = "btnSelWhitelist";
+            this.btnSelWhitelist.Size = new System.Drawing.Size(188, 58);
+            this.btnSelWhitelist.TabIndex = 3;
+            this.btnSelWhitelist.Text = "选择设备...";
+            this.btnSelWhitelist.UseVisualStyleBackColor = true;
+            // 
+            // lblWlVolume
+            // 
+            this.lblWlVolume.AutoSize = true;
+            this.lblWlVolume.Location = new System.Drawing.Point(16, 70);
+            this.lblWlVolume.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblWlVolume.Name = "lblWlVolume";
+            this.lblWlVolume.Size = new System.Drawing.Size(84, 39);
+            this.lblWlVolume.TabIndex = 1;
+            this.lblWlVolume.Text = "设备:";
+            // 
+            // lblWhitelistTip
+            // 
+            this.lblWhitelistTip.AutoSize = true;
+            this.lblWhitelistTip.Location = new System.Drawing.Point(16, 48);
+            this.lblWhitelistTip.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblWhitelistTip.Name = "lblWhitelistTip";
+            this.lblWhitelistTip.Size = new System.Drawing.Size(0, 39);
+            this.lblWhitelistTip.TabIndex = 0;
             // 
             // grpFilter
             // 
@@ -423,195 +600,18 @@
             this.lblFileType.TabIndex = 19;
             this.lblFileType.Text = "文件类型:";
             // 
-            // gbWhitelist
+            // tabPage2
             // 
-            this.gbWhitelist.Controls.Add(this.btnCreateWl);
-            this.gbWhitelist.Controls.Add(this.txtWlDrive);
-            this.gbWhitelist.Controls.Add(this.chkWhitelist);
-            this.gbWhitelist.Controls.Add(this.btnSelWhitelist);
-            this.gbWhitelist.Controls.Add(this.lblWlVolume);
-            this.gbWhitelist.Controls.Add(this.lblWhitelistTip);
-            this.gbWhitelist.Location = new System.Drawing.Point(22, 499);
-            this.gbWhitelist.Margin = new System.Windows.Forms.Padding(8);
-            this.gbWhitelist.Name = "gbWhitelist";
-            this.gbWhitelist.Padding = new System.Windows.Forms.Padding(8);
-            this.gbWhitelist.Size = new System.Drawing.Size(882, 140);
-            this.gbWhitelist.TabIndex = 28;
-            this.gbWhitelist.TabStop = false;
-            // 
-            // btnCreateWl
-            // 
-            this.btnCreateWl.Location = new System.Drawing.Point(676, 54);
-            this.btnCreateWl.Margin = new System.Windows.Forms.Padding(8);
-            this.btnCreateWl.Name = "btnCreateWl";
-            this.btnCreateWl.Size = new System.Drawing.Size(188, 58);
-            this.btnCreateWl.TabIndex = 6;
-            this.btnCreateWl.Text = "创建";
-            this.btnCreateWl.UseVisualStyleBackColor = true;
-            // 
-            // txtWlDrive
-            // 
-            this.txtWlDrive.BackColor = System.Drawing.SystemColors.Window;
-            this.txtWlDrive.Location = new System.Drawing.Point(118, 56);
-            this.txtWlDrive.Margin = new System.Windows.Forms.Padding(8);
-            this.txtWlDrive.Name = "txtWlDrive";
-            this.txtWlDrive.ReadOnly = true;
-            this.txtWlDrive.Size = new System.Drawing.Size(336, 47);
-            this.txtWlDrive.TabIndex = 5;
-            // 
-            // chkWhitelist
-            // 
-            this.chkWhitelist.AutoSize = true;
-            this.chkWhitelist.Location = new System.Drawing.Point(22, 0);
-            this.chkWhitelist.Margin = new System.Windows.Forms.Padding(8);
-            this.chkWhitelist.Name = "chkWhitelist";
-            this.chkWhitelist.Size = new System.Drawing.Size(265, 43);
-            this.chkWhitelist.TabIndex = 4;
-            this.chkWhitelist.Text = "启用设备白名单";
-            this.chkWhitelist.UseVisualStyleBackColor = true;
-            // 
-            // btnSelWhitelist
-            // 
-            this.btnSelWhitelist.Location = new System.Drawing.Point(474, 54);
-            this.btnSelWhitelist.Margin = new System.Windows.Forms.Padding(8);
-            this.btnSelWhitelist.Name = "btnSelWhitelist";
-            this.btnSelWhitelist.Size = new System.Drawing.Size(188, 58);
-            this.btnSelWhitelist.TabIndex = 3;
-            this.btnSelWhitelist.Text = "选择设备...";
-            this.btnSelWhitelist.UseVisualStyleBackColor = true;
-            // 
-            // lblWlVolume
-            // 
-            this.lblWlVolume.AutoSize = true;
-            this.lblWlVolume.Location = new System.Drawing.Point(16, 70);
-            this.lblWlVolume.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblWlVolume.Name = "lblWlVolume";
-            this.lblWlVolume.Size = new System.Drawing.Size(84, 39);
-            this.lblWlVolume.TabIndex = 1;
-            this.lblWlVolume.Text = "设备:";
-            // 
-            // lblWhitelistTip
-            // 
-            this.lblWhitelistTip.AutoSize = true;
-            this.lblWhitelistTip.Location = new System.Drawing.Point(16, 48);
-            this.lblWhitelistTip.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblWhitelistTip.Name = "lblWhitelistTip";
-            this.lblWhitelistTip.Size = new System.Drawing.Size(0, 39);
-            this.lblWhitelistTip.TabIndex = 0;
-            // 
-            // gbCopyTo
-            // 
-            this.gbCopyTo.Controls.Add(this.chkDelOri);
-            this.gbCopyTo.Controls.Add(this.txtCopyTo);
-            this.gbCopyTo.Controls.Add(this.btnSelCopyTo);
-            this.gbCopyTo.Controls.Add(this.lblCopyTo);
-            this.gbCopyTo.Controls.Add(this.chkCopyTo);
-            this.gbCopyTo.Location = new System.Drawing.Point(33, 655);
-            this.gbCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.gbCopyTo.Name = "gbCopyTo";
-            this.gbCopyTo.Padding = new System.Windows.Forms.Padding(8);
-            this.gbCopyTo.Size = new System.Drawing.Size(882, 148);
-            this.gbCopyTo.TabIndex = 30;
-            this.gbCopyTo.TabStop = false;
-            // 
-            // chkDelOri
-            // 
-            this.chkDelOri.AutoSize = true;
-            this.chkDelOri.Location = new System.Drawing.Point(562, 72);
-            this.chkDelOri.Margin = new System.Windows.Forms.Padding(8);
-            this.chkDelOri.Name = "chkDelOri";
-            this.chkDelOri.Size = new System.Drawing.Size(295, 43);
-            this.chkDelOri.TabIndex = 9;
-            this.chkDelOri.Text = "保存后删除原文件";
-            this.chkDelOri.UseVisualStyleBackColor = true;
-            // 
-            // txtCopyTo
-            // 
-            this.txtCopyTo.BackColor = System.Drawing.SystemColors.Window;
-            this.txtCopyTo.Location = new System.Drawing.Point(118, 68);
-            this.txtCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.txtCopyTo.Name = "txtCopyTo";
-            this.txtCopyTo.ReadOnly = true;
-            this.txtCopyTo.Size = new System.Drawing.Size(220, 47);
-            this.txtCopyTo.TabIndex = 8;
-            // 
-            // btnSelCopyTo
-            // 
-            this.btnSelCopyTo.Location = new System.Drawing.Point(358, 66);
-            this.btnSelCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.btnSelCopyTo.Name = "btnSelCopyTo";
-            this.btnSelCopyTo.Size = new System.Drawing.Size(188, 58);
-            this.btnSelCopyTo.TabIndex = 7;
-            this.btnSelCopyTo.Text = "浏览...";
-            this.btnSelCopyTo.UseVisualStyleBackColor = true;
-            // 
-            // lblCopyTo
-            // 
-            this.lblCopyTo.AutoSize = true;
-            this.lblCopyTo.Location = new System.Drawing.Point(16, 82);
-            this.lblCopyTo.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblCopyTo.Name = "lblCopyTo";
-            this.lblCopyTo.Size = new System.Drawing.Size(84, 39);
-            this.lblCopyTo.TabIndex = 6;
-            this.lblCopyTo.Text = "设备:";
-            // 
-            // chkCopyTo
-            // 
-            this.chkCopyTo.AutoSize = true;
-            this.chkCopyTo.Location = new System.Drawing.Point(22, 0);
-            this.chkCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.chkCopyTo.Name = "chkCopyTo";
-            this.chkCopyTo.Size = new System.Drawing.Size(445, 43);
-            this.chkCopyTo.TabIndex = 0;
-            this.chkCopyTo.Text = "将复制的文件保存到指定设备";
-            this.chkCopyTo.UseVisualStyleBackColor = true;
-            // 
-            // gbDriverType
-            // 
-            this.gbDriverType.Controls.Add(this.chkROM);
-            this.gbDriverType.Controls.Add(this.chkUSBHD);
-            this.gbDriverType.Controls.Add(this.chkUSBDisk);
-            this.gbDriverType.Location = new System.Drawing.Point(22, 819);
-            this.gbDriverType.Margin = new System.Windows.Forms.Padding(8);
-            this.gbDriverType.Name = "gbDriverType";
-            this.gbDriverType.Padding = new System.Windows.Forms.Padding(8);
-            this.gbDriverType.Size = new System.Drawing.Size(882, 124);
-            this.gbDriverType.TabIndex = 31;
-            this.gbDriverType.TabStop = false;
-            this.gbDriverType.Text = "可移动设备类型";
-            // 
-            // chkROM
-            // 
-            this.chkROM.AutoSize = true;
-            this.chkROM.Location = new System.Drawing.Point(478, 56);
-            this.chkROM.Margin = new System.Windows.Forms.Padding(8);
-            this.chkROM.Name = "chkROM";
-            this.chkROM.Size = new System.Drawing.Size(344, 43);
-            this.chkROM.TabIndex = 2;
-            this.chkROM.Text = "光盘 (包括挂载的ISO)";
-            this.chkROM.UseVisualStyleBackColor = true;
-            // 
-            // chkUSBHD
-            // 
-            this.chkUSBHD.AutoSize = true;
-            this.chkUSBHD.Location = new System.Drawing.Point(264, 56);
-            this.chkUSBHD.Margin = new System.Windows.Forms.Padding(8);
-            this.chkUSBHD.Name = "chkUSBHD";
-            this.chkUSBHD.Size = new System.Drawing.Size(182, 43);
-            this.chkUSBHD.TabIndex = 1;
-            this.chkUSBHD.Text = "USB 硬盘";
-            this.chkUSBHD.UseVisualStyleBackColor = true;
-            // 
-            // chkUSBDisk
-            // 
-            this.chkUSBDisk.AutoSize = true;
-            this.chkUSBDisk.Location = new System.Drawing.Point(22, 56);
-            this.chkUSBDisk.Margin = new System.Windows.Forms.Padding(8);
-            this.chkUSBDisk.Name = "chkUSBDisk";
-            this.chkUSBDisk.Size = new System.Drawing.Size(212, 43);
-            this.chkUSBDisk.TabIndex = 0;
-            this.chkUSBDisk.Text = "USB 闪存盘";
-            this.chkUSBDisk.UseVisualStyleBackColor = true;
+            this.tabPage2.Controls.Add(this.gbLog);
+            this.tabPage2.Controls.Add(this.gbHotkey);
+            this.tabPage2.Controls.Add(this.grpProgram);
+            this.tabPage2.Location = new System.Drawing.Point(10, 56);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(926, 966);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "程序设置";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // gbLog
             // 
@@ -715,15 +715,15 @@
             this.gbHotkey.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.grpFilter.ResumeLayout(false);
-            this.grpFilter.PerformLayout();
-            this.gbWhitelist.ResumeLayout(false);
-            this.gbWhitelist.PerformLayout();
-            this.gbCopyTo.ResumeLayout(false);
-            this.gbCopyTo.PerformLayout();
             this.gbDriverType.ResumeLayout(false);
             this.gbDriverType.PerformLayout();
+            this.gbCopyTo.ResumeLayout(false);
+            this.gbCopyTo.PerformLayout();
+            this.gbWhitelist.ResumeLayout(false);
+            this.gbWhitelist.PerformLayout();
+            this.grpFilter.ResumeLayout(false);
+            this.grpFilter.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
             this.gbLog.ResumeLayout(false);
             this.gbLog.PerformLayout();
             this.ResumeLayout(false);
