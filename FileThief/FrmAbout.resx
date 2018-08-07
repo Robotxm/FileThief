@@ -130,6 +130,21 @@ Copyright © 2014-2017 MoeFactory All Rights Reserved.
 FileThief 在 GPL v3 协议下开放源代码。
 更多信息请访问 GitHub: </value>
   </data>
+  <data name="rtbeOpenSource.Text" xml:space="preserve">
+    <value>A simple hotkey selection control for .NET
+Author: Telrunya
+Date: 2006.8.7
+Link: https://www.codeproject.com/Articles/15085/A-simple-hotkey-selection-control-for-NET
+License: Unknown
+
+Themed RichTextBox - A RichTextBox with XP-styled borders
+Author: Bernhard Elbl
+Date: 2006.10.11
+Link: https://www.codeproject.com/Articles/13723/Themed-RichTextBox-A-RichTextBox-with-XP-styled-bo
+License: The Code Project Open License (CPOL) 1.02 (https://www.codeproject.com/info/cpol10.aspx)
+
+</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

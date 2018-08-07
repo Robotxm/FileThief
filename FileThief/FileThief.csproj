@@ -64,6 +64,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Be.Windows.Forms.RichTextBoxEx">
+      <HintPath>..\..\..\..\DLLs\Be.Windows.Forms.RichTextBoxEx\Be.Windows.Forms.RichTextBoxEx.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -95,8 +98,15 @@
     <Compile Include="FrmSettings.Designer.cs">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotkeyControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichTextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,6 +126,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RichTextBoxEx.resx">
+      <DependentUpon>RichTextBoxEx.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -143,6 +156,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>D:\Program\Tools\IncBuildNo\IncBuildNo.exe "$(PROJECTDIR)\Properties\AssemblyInfo.cs" "\[assembly: AssemblyVersion\(\"\d+\.\d+\.\d+\.(\d+)" 1 Debug $(ConfigurationName)</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)Tools\IncBuildNo.exe "$(PROJECTDIR)\Properties\AssemblyInfo.cs" "\[assembly: AssemblyVersion\(\"\d+\.\d+\.\d+\.(\d+)" 1 Debug $(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

