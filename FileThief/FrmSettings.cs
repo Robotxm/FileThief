@@ -60,11 +60,6 @@ namespace FileThief
 
             chkWhitelist.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConWhitelist));
             ManageCheckGroupBox(chkWhitelist, gbWhitelist);
-
-            chkCopyTo.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConCopyTo));
-            txtCopyTo.Text = ClsMain.ConCtDevice;
-            chkDelOri.Checked = Convert.ToBoolean(Convert.ToInt32(ClsMain.ConDelOri));
-            ManageCheckGroupBox(chkCopyTo, gbCopyTo);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -96,10 +91,6 @@ namespace FileThief
 
             ClsMain.WriteIni("Hotkey", "Enabled", Convert.ToInt32(chkHotkey.Checked).ToString(), ClsMain.StrConfig);
             ClsMain.WriteIni("Hotkey","Hotkey",hkcHotkey.Text,ClsMain.StrConfig);
-
-            ClsMain.WriteIni("CopyTo", "Enabled", Convert.ToInt32(chkHotkey.Checked).ToString(), ClsMain.StrConfig);
-            ClsMain.WriteIni("CopyTo", "SaveDevice", txtCopyTo.Text, ClsMain.StrConfig);
-            ClsMain.WriteIni("CopyTo", "DeleteOriginalFiles", Convert.ToInt32(chkDelOri.Checked).ToString(), ClsMain.StrConfig);
 
             var bootStatus = ClsMain.SetAutoBoot(chkAutoRun.Checked);
             if (bootStatus == -1)
@@ -140,19 +131,13 @@ namespace FileThief
         private void chkWhitelist_CheckedChanged(object sender, EventArgs e)
         {
             ManageCheckGroupBox(chkWhitelist, gbWhitelist);
-            if (!chkWhitelist.Checked) chkCopyTo.Checked = false;
         }
 
         private void chkHotkey_CheckedChanged(object sender, EventArgs e)
         {
             ManageCheckGroupBox(chkHotkey, gbHotkey);
         }
-
-        private void chkCopyTo_CheckedChanged(object sender, EventArgs e)
-        {
-            ManageCheckGroupBox(chkCopyTo, gbCopyTo);
-            if (chkCopyTo.Checked) chkWhitelist.Checked = true;
-        }
+        
 
         // Solution from http://csharphelper.com/blog/2014/08/make-a-checked-groupbox-in-c/
         private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
@@ -169,13 +154,6 @@ namespace FileThief
         private void btnSelWhitelist_Click(object sender, EventArgs e)
         {
             fdb.Description = "请选择要加入白名单的设备。\n之后请返回设置界面点击「创建」。";
-            fdb.ShowDialog();
-            if (fdb.SelectedPath != "") txtWlDrive.Text = Path.GetPathRoot(fdb.SelectedPath);
-        }
-
-        private void btnSelCopyTo_Click(object sender, EventArgs e)
-        {
-            fdb.Description = "请选择要保存复制到的文件的设备。";
             fdb.ShowDialog();
             if (fdb.SelectedPath != "") txtWlDrive.Text = Path.GetPathRoot(fdb.SelectedPath);
         }

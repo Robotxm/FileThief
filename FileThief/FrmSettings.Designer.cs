@@ -49,12 +49,6 @@
             this.chkROM = new System.Windows.Forms.CheckBox();
             this.chkUSBHD = new System.Windows.Forms.CheckBox();
             this.chkUSBDisk = new System.Windows.Forms.CheckBox();
-            this.gbCopyTo = new System.Windows.Forms.GroupBox();
-            this.chkDelOri = new System.Windows.Forms.CheckBox();
-            this.txtCopyTo = new System.Windows.Forms.TextBox();
-            this.btnSelCopyTo = new System.Windows.Forms.Button();
-            this.lblCopyTo = new System.Windows.Forms.Label();
-            this.chkCopyTo = new System.Windows.Forms.CheckBox();
             this.gbWhitelist = new System.Windows.Forms.GroupBox();
             this.btnCreateWl = new System.Windows.Forms.Button();
             this.txtWlDrive = new System.Windows.Forms.TextBox();
@@ -91,7 +85,6 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbDriverType.SuspendLayout();
-            this.gbCopyTo.SuspendLayout();
             this.gbWhitelist.SuspendLayout();
             this.grpFilter.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -122,7 +115,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(774, 1122);
+            this.btnSave.Location = new System.Drawing.Point(775, 952);
             this.btnSave.Margin = new System.Windows.Forms.Padding(8);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(188, 58);
@@ -133,7 +126,7 @@
             // 
             // btnAbout
             // 
-            this.btnAbout.Location = new System.Drawing.Point(570, 1122);
+            this.btnAbout.Location = new System.Drawing.Point(571, 952);
             this.btnAbout.Margin = new System.Windows.Forms.Padding(8);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(188, 58);
@@ -145,7 +138,7 @@
             // lblTip
             // 
             this.lblTip.AutoSize = true;
-            this.lblTip.Location = new System.Drawing.Point(10, 1078);
+            this.lblTip.Location = new System.Drawing.Point(20, 896);
             this.lblTip.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.lblTip.Name = "lblTip";
             this.lblTip.Size = new System.Drawing.Size(377, 39);
@@ -218,19 +211,18 @@
             this.tabControl1.Location = new System.Drawing.Point(17, 30);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(946, 1032);
+            this.tabControl1.Size = new System.Drawing.Size(946, 863);
             this.tabControl1.TabIndex = 30;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.gbDriverType);
-            this.tabPage1.Controls.Add(this.gbCopyTo);
             this.tabPage1.Controls.Add(this.gbWhitelist);
             this.tabPage1.Controls.Add(this.grpFilter);
             this.tabPage1.Location = new System.Drawing.Point(10, 56);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(926, 966);
+            this.tabPage1.Size = new System.Drawing.Size(926, 797);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "复制设置";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -240,7 +232,7 @@
             this.gbDriverType.Controls.Add(this.chkROM);
             this.gbDriverType.Controls.Add(this.chkUSBHD);
             this.gbDriverType.Controls.Add(this.chkUSBDisk);
-            this.gbDriverType.Location = new System.Drawing.Point(22, 819);
+            this.gbDriverType.Location = new System.Drawing.Point(22, 655);
             this.gbDriverType.Margin = new System.Windows.Forms.Padding(8);
             this.gbDriverType.Name = "gbDriverType";
             this.gbDriverType.Padding = new System.Windows.Forms.Padding(8);
@@ -281,73 +273,6 @@
             this.chkUSBDisk.TabIndex = 0;
             this.chkUSBDisk.Text = "USB 闪存盘";
             this.chkUSBDisk.UseVisualStyleBackColor = true;
-            // 
-            // gbCopyTo
-            // 
-            this.gbCopyTo.Controls.Add(this.chkDelOri);
-            this.gbCopyTo.Controls.Add(this.txtCopyTo);
-            this.gbCopyTo.Controls.Add(this.btnSelCopyTo);
-            this.gbCopyTo.Controls.Add(this.lblCopyTo);
-            this.gbCopyTo.Controls.Add(this.chkCopyTo);
-            this.gbCopyTo.Location = new System.Drawing.Point(22, 655);
-            this.gbCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.gbCopyTo.Name = "gbCopyTo";
-            this.gbCopyTo.Padding = new System.Windows.Forms.Padding(8);
-            this.gbCopyTo.Size = new System.Drawing.Size(882, 148);
-            this.gbCopyTo.TabIndex = 30;
-            this.gbCopyTo.TabStop = false;
-            // 
-            // chkDelOri
-            // 
-            this.chkDelOri.AutoSize = true;
-            this.chkDelOri.Location = new System.Drawing.Point(562, 72);
-            this.chkDelOri.Margin = new System.Windows.Forms.Padding(8);
-            this.chkDelOri.Name = "chkDelOri";
-            this.chkDelOri.Size = new System.Drawing.Size(295, 43);
-            this.chkDelOri.TabIndex = 9;
-            this.chkDelOri.Text = "保存后删除原文件";
-            this.chkDelOri.UseVisualStyleBackColor = true;
-            // 
-            // txtCopyTo
-            // 
-            this.txtCopyTo.BackColor = System.Drawing.SystemColors.Window;
-            this.txtCopyTo.Location = new System.Drawing.Point(118, 68);
-            this.txtCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.txtCopyTo.Name = "txtCopyTo";
-            this.txtCopyTo.ReadOnly = true;
-            this.txtCopyTo.Size = new System.Drawing.Size(220, 47);
-            this.txtCopyTo.TabIndex = 8;
-            // 
-            // btnSelCopyTo
-            // 
-            this.btnSelCopyTo.Location = new System.Drawing.Point(358, 66);
-            this.btnSelCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.btnSelCopyTo.Name = "btnSelCopyTo";
-            this.btnSelCopyTo.Size = new System.Drawing.Size(188, 58);
-            this.btnSelCopyTo.TabIndex = 7;
-            this.btnSelCopyTo.Text = "浏览...";
-            this.btnSelCopyTo.UseVisualStyleBackColor = true;
-            // 
-            // lblCopyTo
-            // 
-            this.lblCopyTo.AutoSize = true;
-            this.lblCopyTo.Location = new System.Drawing.Point(16, 82);
-            this.lblCopyTo.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblCopyTo.Name = "lblCopyTo";
-            this.lblCopyTo.Size = new System.Drawing.Size(84, 39);
-            this.lblCopyTo.TabIndex = 6;
-            this.lblCopyTo.Text = "设备:";
-            // 
-            // chkCopyTo
-            // 
-            this.chkCopyTo.AutoSize = true;
-            this.chkCopyTo.Location = new System.Drawing.Point(22, 0);
-            this.chkCopyTo.Margin = new System.Windows.Forms.Padding(8);
-            this.chkCopyTo.Name = "chkCopyTo";
-            this.chkCopyTo.Size = new System.Drawing.Size(445, 43);
-            this.chkCopyTo.TabIndex = 0;
-            this.chkCopyTo.Text = "将复制的文件保存到指定设备";
-            this.chkCopyTo.UseVisualStyleBackColor = true;
             // 
             // gbWhitelist
             // 
@@ -694,7 +619,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(240F, 240F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(979, 1197);
+            this.ClientSize = new System.Drawing.Size(979, 1035);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTip);
             this.Controls.Add(this.btnAbout);
@@ -717,8 +642,6 @@
             this.tabPage1.ResumeLayout(false);
             this.gbDriverType.ResumeLayout(false);
             this.gbDriverType.PerformLayout();
-            this.gbCopyTo.ResumeLayout(false);
-            this.gbCopyTo.PerformLayout();
             this.gbWhitelist.ResumeLayout(false);
             this.gbWhitelist.PerformLayout();
             this.grpFilter.ResumeLayout(false);
@@ -751,12 +674,6 @@
         private System.Windows.Forms.CheckBox chkROM;
         private System.Windows.Forms.CheckBox chkUSBHD;
         private System.Windows.Forms.CheckBox chkUSBDisk;
-        private System.Windows.Forms.GroupBox gbCopyTo;
-        private System.Windows.Forms.CheckBox chkDelOri;
-        private System.Windows.Forms.TextBox txtCopyTo;
-        private System.Windows.Forms.Button btnSelCopyTo;
-        private System.Windows.Forms.Label lblCopyTo;
-        private System.Windows.Forms.CheckBox chkCopyTo;
         private System.Windows.Forms.GroupBox gbWhitelist;
         private System.Windows.Forms.Button btnCreateWl;
         private System.Windows.Forms.TextBox txtWlDrive;

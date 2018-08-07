@@ -101,9 +101,6 @@ namespace FileThief
                 ClsMain.WriteIni("Hotkey", "Enabled", "0", ClsMain.StrConfig);
                 ClsMain.WriteIni("Hotkey", "Hotkey", "", ClsMain.StrConfig);
 
-                ClsMain.WriteIni("CopyTo", "Enabled", "0", ClsMain.StrConfig);
-                ClsMain.WriteIni("CopyTo", "SavePath", "", ClsMain.StrConfig);
-                ClsMain.WriteIni("CopyTo","DeleteOriginalFiles","1",ClsMain.StrConfig);
                 LoadSettings();
                 if (!Directory.Exists(Application.StartupPath + "\\Files")) Directory.CreateDirectory(Application.StartupPath + "\\Files");
                 if (!File.Exists(ClsMain.ConLogPath)) File.WriteAllText(ClsMain.ConLogPath, "FileThief 日志\r\n\r\n", Encoding.UTF8);
@@ -169,10 +166,6 @@ namespace FileThief
 
             ClsMain.ConHotkeyE = ClsMain.ReadIni("Hotkey", "Enabled", "0", ClsMain.StrConfig);
             ClsMain.ConHotkey = ClsMain.ReadIni("Hotkey", "Hotkey", "", ClsMain.StrConfig);
-
-            ClsMain.ConCopyTo = ClsMain.ReadIni("CopyTo", "Enabled", "0", ClsMain.StrConfig);
-            ClsMain.ConCtDevice = ClsMain.ReadIni("CopyTo", "SaveDevice", "", ClsMain.StrConfig);
-            ClsMain.ConDelOri = ClsMain.ReadIni("CopyTo", "DeleteOriginalFiles", "1", ClsMain.StrConfig);
 
             System.Diagnostics.Debug.WriteLine("CHE "+ClsMain.ConHotkeyE);
             bool t = RegHotKey(ClsMain.ConHotkey, Handle);
@@ -397,7 +390,6 @@ namespace FileThief
             {
                 WriteLog(ex.Message,1,ClsMain.ConLogPath);
             }
-            
         }
 
         public static void CheckRegExp(string fullName)
